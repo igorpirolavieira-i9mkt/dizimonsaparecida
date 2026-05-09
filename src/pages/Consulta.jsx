@@ -137,7 +137,7 @@ export default function Consulta() {
               value={busca}
               onChange={e => { setBusca(e.target.value); if (selecionado) limpar() }}
               placeholder="Digite seu nome..."
-              className="flex-1 px-4 py-3 rounded-xl border-2 border-manto/20 focus:outline-none focus:border-manto text-sm bg-gray-50"
+              className="flex-1 px-4 py-3 rounded-xl border-2 border-manto/20 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm bg-gray-50"
               autoComplete="off"
               minLength={2}
             />

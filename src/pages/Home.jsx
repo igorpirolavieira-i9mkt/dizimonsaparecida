@@ -197,7 +197,7 @@ export default function Home() {
     <div className="min-h-screen bg-manto-50">
 
       {/* Header — contador de sessão aparece após 1º lançamento */}
-      <header className="bg-manto text-white px-4 py-3 flex items-center justify-between shadow-md sticky top-0 z-10 border-b-[3px] border-dourado">
+      <header className="manto-header bg-manto text-white px-4 py-3 flex items-center justify-between shadow-md sticky top-0 z-10 border-b-[3px] border-dourado">
         <div>
           <h1 className="text-base font-bold leading-tight">🕊️ Dízimo NS Aparecida</h1>
           {sessaoQtd > 0 ? (

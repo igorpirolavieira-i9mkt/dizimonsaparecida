@@ -157,7 +157,7 @@ export default function RelatorioDia() {
     <div className="min-h-screen bg-blue-50">
 
       {/* Header */}
-      <header className="bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado">
+      <header className="manto-header bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado">
         <h1 className="text-base font-bold">📋 Canhoto da Mitra</h1>
         <p className="text-blue-200 text-xs">Lançamentos por período — data de registro</p>
       </header>
@@ -191,7 +191,7 @@ export default function RelatorioDia() {
               <input
                 type="date" value={dataInicio}
                 onChange={e => { setDataInicio(e.target.value); setPeriodoAtivo('') }}
-                className="w-full px-3 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm font-semibold bg-gray-50"
+                className="w-full px-3 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm font-semibold bg-gray-50"
               />
             </div>
             <div>
@@ -199,7 +199,7 @@ export default function RelatorioDia() {
               <input
                 type="date" value={dataFim}
                 onChange={e => { setDataFim(e.target.value); setPeriodoAtivo('') }}
-                className="w-full px-3 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm font-semibold bg-gray-50"
+                className="w-full px-3 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm font-semibold bg-gray-50"
               />
             </div>
           </div>

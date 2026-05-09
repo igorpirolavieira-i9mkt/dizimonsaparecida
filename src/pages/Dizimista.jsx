@@ -135,7 +135,7 @@ export default function Dizimista() {
     <div className="min-h-screen bg-blue-50">
 
       {/* Header */}
-      <header className="bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center gap-3">
+      <header className="manto-header bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center gap-3">
         <button
           onClick={() => navigate(-1)}
           className="text-blue-200 hover:text-white text-xl leading-none"
@@ -426,7 +426,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
             <select
               value={anoRef}
               onChange={e => setAnoRef(Number(e.target.value))}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 font-semibold text-sm"
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 bg-gray-50 font-semibold text-sm"
             >
               {ANOS_DISPONIVEIS.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
@@ -489,7 +489,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
               placeholder="0,00"
               value={valor}
               onChange={e => setValor(e.target.value)}
-              className="w-full px-4 py-3 text-lg font-bold rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50"
+              className="w-full px-4 py-3 text-lg font-bold rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 bg-gray-50"
             />
             {valor && mesesSelecionados.length > 1 && (
               <p className="text-xs text-gray-400 mt-1 text-right">
@@ -530,7 +530,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
               placeholder="Ex: retroativo, pagamento anual..."
               value={observacao}
               onChange={e => setObservacao(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 text-sm"
+              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 bg-gray-50 text-sm"
             />
           </div>
 

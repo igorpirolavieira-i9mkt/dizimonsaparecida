@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Reset limpo para app mobile */
+/* ============================================================
+   NS Aparecida — Global styles
+   Nunito para UI · Cormorant Garamond para momentos devocionais
+   ============================================================ */
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -10,10 +14,11 @@
 body {
   margin: 0;
   padding: 0;
-  background: #F4F6FA;
+  background: #EEF3FA;   /* --azul-50 */
+  font-family: 'Nunito', system-ui, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #root {
@@ -21,7 +26,97 @@ body {
   min-height: 100svh;
 }
 
+/* ============================================================
+   Marca registrada — faixa dourada gradiente
+   Usa como <div className="faixa-dourada"> logo abaixo do header
+   OU como border-bottom da classe .manto-header abaixo.
+   ============================================================ */
+.faixa-dourada {
+  height: 3px;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #C9A84C, #F0D98C, #C9A84C);
+}
+
+/* ============================================================
+   Assinatura visual: esferas douradas decorativas no header
+   Adicione a classe `manto-header` em qualquer <header> azul-manto.
+   O seletor `> *` garante que o conteúdo fica acima das esferas.
+   ============================================================ */
+.manto-header {
+  position: relative;
+  overflow: hidden;
+}
+.manto-header::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -30px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: rgba(201, 168, 76, 0.13);
+  pointer-events: none;
+  z-index: 0;
+}
+.manto-header::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  right: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(201, 168, 76, 0.08);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Todo conteúdo direto do header fica acima das esferas */
+.manto-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================================
+   Inputs — focus dourado (não azul)
+   ============================================================ */
+.input-dourado:focus {
+  outline: none;
+  border-color: #C9A84C;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+}
+
+/* ============================================================
+   Utilitários
+   ============================================================ */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gradiente splash — login/splash devocional */
+.splash-bg {
+  background: linear-gradient(160deg, #0F2347 0%, #1A3A6B 60%, #254D8F 100%);
+}
+
 /* Área segura iPhone */
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ============================================================
+   Tipografia devocional — Cormorant Garamond
+   ============================================================ */
+.font-devocional {
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+}
+.splash-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.25rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.005em;
 }

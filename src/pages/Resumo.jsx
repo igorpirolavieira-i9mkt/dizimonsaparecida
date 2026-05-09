@@ -139,7 +139,7 @@ export default function Resumo() {
     <div className="min-h-screen bg-blue-50">
 
       {/* Header */}
-      <header className="bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center justify-between">
+      <header className="manto-header bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center justify-between">
         <div>
           <h1 className="text-base font-bold">📊 Resumo Mensal</h1>
           <p className="text-blue-200 text-xs">Arrecadação e situação dos dizimistas</p>

@@ -27,7 +27,7 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-blue-50">
       {/* Header */}
-      <header className="bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center justify-between">
+      <header className="manto-header bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center justify-between">
         <div>
           <h1 className="text-base font-bold">⚙️ Administração</h1>
           <p className="text-blue-200 text-xs">Gerenciar dizimistas</p>
@@ -211,7 +211,7 @@ function AbaDizimistas() {
           placeholder="Buscar nome..."
           value={busca}
           onChange={e => setBusca(e.target.value)}
-          className="flex-1 px-3 py-2 rounded-xl border-2 border-manto/20 bg-white text-sm focus:outline-none focus:border-manto"
+          className="flex-1 px-3 py-2 rounded-xl border-2 border-manto/20 bg-white text-sm focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15"
         />
         <button
           onClick={abrirCriar}
@@ -322,7 +322,7 @@ function AbaDizimistas() {
                   value={modal.dados.nome}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, nome: e.target.value } }))}
                   placeholder="Nome do dizimista"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm"
                   autoFocus
                 />
               </div>
@@ -336,7 +336,7 @@ function AbaDizimistas() {
                   type="date"
                   value={modal.dados.data_nascimento}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, data_nascimento: e.target.value } }))}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm"
                 />
                 <p className="text-xs text-gray-400 mt-1">Use o ano 1900 se quiser apenas o dia/mês.</p>
               </div>
@@ -349,7 +349,7 @@ function AbaDizimistas() {
                   value={modal.dados.telefone}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, telefone: e.target.value } }))}
                   placeholder="(27) 99999-9999"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm"
                 />
               </div>
 
@@ -361,7 +361,7 @@ function AbaDizimistas() {
                   value={modal.dados.email}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, email: e.target.value } }))}
                   placeholder="email@exemplo.com"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm"
                 />
               </div>
 
@@ -770,7 +770,7 @@ function AbaExportar() {
           <select
             value={ano}
             onChange={e => setAno(Number(e.target.value))}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 font-semibold text-sm"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 bg-gray-50 font-semibold text-sm"
           >
             {[2023, 2024, 2025, 2026].map(a => (
               <option key={a} value={a}>{a}</option>
