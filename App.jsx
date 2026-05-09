@@ -1,0 +1,139 @@
+// src/App.jsx
+// Rotas do app + proteção de acesso + NavBar
+// Todas as rotas exceto /login e /consulta exigem autenticação
+
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { supabase } from './lib/supabase'
+import NavBar from './components/NavBar'
+
+// Importação das páginas (crie cada uma aos poucos)
+import Login from './pages/Login'
+import Home from './pages/Home'
+// import Dizimista from './pages/Dizimista'       // próximo passo
+// import Resumo from './pages/Resumo'             // próximo passo
+// import RelatorioDia from './pages/RelatorioDia' // próximo passo
+// import Comprovantes from './pages/Comprovantes' // próximo passo
+// import Pix from './pages/Pix'                   // próximo passo
+// import Admin from './pages/Admin'               // próximo passo
+// import Consulta from './pages/Consulta'         // sem login
+
+// Placeholder para telas ainda não construídas
+function EmConstrucao({ titulo }) {
+  return (
+    <div className="min-h-screen bg-blue-50 flex flex-col items-center justify-center text-center px-4 pb-20">
+      <div className="text-5xl mb-4">🔧</div>
+      <h2 className="text-xl font-bold text-blue-900">{titulo}</h2>
+      <p className="text-gray-400 text-sm mt-2">Em construção</p>
+    </div>
+  )
+}
+
+// Componente que protege rotas privadas
+function RotaProtegida({ children, sessao }) {
+  if (sessao === undefined) {
+    // Ainda verificando sessão — tela de loading
+    return (
+      <div className="min-h-screen bg-blue-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-4xl mb-3 animate-pulse">🕊️</div>
+          <p className="text-blue-600 text-sm">Carregando...</p>
+        </div>
+      </div>
+    )
+  }
+  if (!sessao) {
+    return <Navigate to="/login" replace />
+  }
+  return children
+}
+
+// Layout com NavBar (só para telas autenticadas)
+function LayoutComNav({ children }) {
+  return (
+    <div className="pb-20"> {/* pb-20 = espaço para a NavBar fixa */}
+      {children}
+      <NavBar />
+    </div>
+  )
+}
+
+export default function App() {
+  const [sessao, setSessao] = useState(undefined) // undefined = carregando
+
+  useEffect(() => {
+    // Verifica sessão atual ao iniciar
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSessao(session)
+    })
+
+    // Escuta mudanças de autenticação (login/logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSessao(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Login — público */}
+        <Route path="/login" element={
+          sessao ? <Navigate to="/" replace /> : <Login />
+        } />
+
+        {/* Consulta pública — sem login */}
+        <Route path="/consulta" element={
+          <EmConstrucao titulo="Consulta Pública" />
+        } />
+
+        {/* Rotas protegidas */}
+        <Route path="/" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><Home /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/dizimista/:id" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Perfil do Dizimista" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/resumo" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Resumo Mensal" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/relatorio-dia" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Canhoto da Mitra" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/comprovantes" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Comprovantes PIX" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/pix" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Gerador PIX" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/admin" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><EmConstrucao titulo="Administração" /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        {/* Qualquer rota inválida → home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
