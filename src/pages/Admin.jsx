@@ -3,13 +3,15 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
+import { usePerfil, ehCoordenador } from '../lib/perfil'
 import * as XLSX from 'xlsx'
 
-// Abas do painel
+// Abas do painel — aba Agentes visível apenas para coordenadores (filtrado no render)
 const ABAS = [
-  { id: 'dizimistas', label: '👥 Dizimistas' },
-  { id: 'importar',   label: '📥 Importar' },
-  { id: 'exportar',   label: '📤 Exportar' },
+  { id: 'dizimistas', label: '👥 Dizimistas',   apenasCoord: false },
+  { id: 'importar',   label: '📥 Importar',     apenasCoord: false },
+  { id: 'exportar',   label: '📤 Exportar',     apenasCoord: false },
+  { id: 'agentes',    label: '🔑 Agentes',      apenasCoord: true  },
 ]
 
 // Formulário vazio para novo dizimista
@@ -23,6 +25,11 @@ const FORM_VAZIO = {
 
 export default function Admin() {
   const [aba, setAba] = useState('dizimistas')
+  const perfil = usePerfil()
+  const coord  = ehCoordenador(perfil)
+
+  // Abas visíveis de acordo com o role
+  const abasVisiveis = ABAS.filter(a => !a.apenasCoord || coord)
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -30,7 +37,9 @@ export default function Admin() {
       <header className="manto-header bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center justify-between">
         <div>
           <h1 className="text-base font-bold">⚙️ Administração</h1>
-          <p className="text-blue-200 text-xs">Gerenciar dizimistas</p>
+          <p className="text-blue-200 text-xs">
+            {perfil?.nome || 'Carregando...'} · {coord ? 'Coordenador' : 'Agente'}
+          </p>
         </div>
         <button
           onClick={async () => {
@@ -45,12 +54,12 @@ export default function Admin() {
       </header>
 
       {/* Abas */}
-      <div className="flex border-b border-manto/20 bg-white">
-        {ABAS.map(a => (
+      <div className="flex border-b border-manto/20 bg-white overflow-x-auto">
+        {abasVisiveis.map(a => (
           <button
             key={a.id}
             onClick={() => setAba(a.id)}
-            className={`flex-1 py-3 text-xs font-semibold transition-colors border-b-2
+            className={`flex-1 py-3 text-xs font-semibold transition-colors border-b-2 whitespace-nowrap px-2
               ${aba === a.id
                 ? 'text-manto border-dourado bg-dourado/5'
                 : 'text-gray-400 border-transparent hover:text-manto/70'
@@ -66,6 +75,13 @@ export default function Admin() {
         {aba === 'dizimistas' && <AbaDizimistas />}
         {aba === 'importar'   && <AbaImportar />}
         {aba === 'exportar'   && <AbaExportar />}
+        {aba === 'agentes'    && coord && <AbaAgentes />}
+        {aba === 'agentes'    && !coord && (
+          <div className="px-4 py-10 text-center text-gray-400">
+            <p className="text-2xl mb-2">🔒</p>
+            <p className="text-sm">Acesso restrito ao coordenador.</p>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -796,6 +812,170 @@ function AbaExportar() {
       >
         {exportando ? '⏳ Gerando...' : '📤 Baixar Planilha Excel'}
       </button>
+    </div>
+  )
+}
+
+// ===========================================================
+// ABA: AGENTES — gerenciamento de perfis (coordenador/agente)
+// Visível apenas para coordenadores
+// ===========================================================
+function AbaAgentes() {
+  const [perfis, setPerfis]           = useState([])
+  const [carregando, setCarregando]   = useState(true)
+  const [mensagem, setMensagem]       = useState(null)
+  const [salvando, setSalvando]       = useState(false)
+  const [adicionando, setAdicionando] = useState(false)
+  const [novoUuid, setNovoUuid]       = useState('')
+  const [novoNome, setNovoNome]       = useState('')
+  const [novoRole, setNovoRole]       = useState('agente')
+
+  useEffect(() => { carregarPerfis() }, [])
+
+  async function carregarPerfis() {
+    setCarregando(true)
+    try {
+      const { data, error } = await supabase
+        .from('perfis').select('id, role, nome, criado_em').order('criado_em')
+      if (error) throw error
+      setPerfis(data || [])
+    } catch (err) { console.error(err) }
+    finally { setCarregando(false) }
+  }
+
+  function msg(tipo, texto) {
+    setMensagem({ tipo, texto })
+    setTimeout(() => setMensagem(null), 4000)
+  }
+
+  async function alterarRole(id, role) {
+    setSalvando(true)
+    try {
+      const { error } = await supabase.from('perfis').update({ role }).eq('id', id)
+      if (error) throw error
+      await carregarPerfis()
+      msg('ok', 'Role atualizado.')
+    } catch { msg('erro', 'Erro ao atualizar role.') }
+    finally { setSalvando(false) }
+  }
+
+  async function removerPerfil(id, nome) {
+    if (!window.confirm(`Remover o acesso de ${nome}?`)) return
+    try {
+      const { error } = await supabase.from('perfis').delete().eq('id', id)
+      if (error) throw error
+      await carregarPerfis()
+      msg('ok', `Acesso de ${nome} removido.`)
+    } catch { msg('erro', 'Erro ao remover.') }
+  }
+
+  async function adicionarPerfil(e) {
+    e.preventDefault()
+    const uuid = novoUuid.trim(); const nome = novoNome.trim()
+    if (!uuid || !nome) return
+    setAdicionando(true)
+    try {
+      const { error } = await supabase.from('perfis').insert({ id: uuid, role: novoRole, nome })
+      if (error) {
+        if (error.code === '23505') throw new Error('UUID já cadastrado.')
+        if (error.code === '23503') throw new Error('UUID inválido — usuário não encontrado no Auth.')
+        throw error
+      }
+      setNovoUuid(''); setNovoNome('')
+      await carregarPerfis()
+      msg('ok', `${nome} adicionado como ${novoRole}.`)
+    } catch (err) { msg('erro', err.message || 'Erro ao adicionar.') }
+    finally { setAdicionando(false) }
+  }
+
+  return (
+    <div className="px-4 py-4 space-y-4">
+
+      {mensagem && (
+        <div className={`rounded-xl px-4 py-3 text-sm font-semibold text-center
+          ${mensagem.tipo === 'ok'
+            ? 'bg-pago-light text-pago border border-pago-border'
+            : 'bg-ausente-light text-ausente border border-ausente-border'}`}>
+          {mensagem.tipo === 'ok' ? '✅' : '❌'} {mensagem.texto}
+        </div>
+      )}
+
+      <p className="text-xs font-bold text-dourado uppercase tracking-wider">Agentes com acesso</p>
+
+      {carregando ? (
+        <p className="text-center text-gray-400 py-6 text-sm animate-pulse">Carregando...</p>
+      ) : perfis.length === 0 ? (
+        <p className="text-center text-gray-400 py-6 text-sm">Nenhum perfil cadastrado.</p>
+      ) : (
+        <div className="space-y-2">
+          {perfis.map(p => (
+            <div key={p.id} className="bg-white rounded-2xl border border-cinza-borda shadow-sm px-4 py-3 flex items-center gap-3 min-h-[64px]">
+              <div className="w-10 h-10 rounded-full bg-manto/10 flex items-center justify-center font-bold text-manto text-sm shrink-0">
+                {(p.nome || '?').charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-manto truncate">{p.nome || '—'}</p>
+                <p className="text-xs text-gray-400 font-mono truncate">{p.id.slice(0, 8)}…</p>
+              </div>
+              <select
+                value={p.role} onChange={e => alterarRole(p.id, e.target.value)} disabled={salvando}
+                className={`text-xs font-bold rounded-lg px-2 py-1.5 border focus:outline-none shrink-0
+                  ${p.role === 'coordenador'
+                    ? 'bg-dourado/10 text-dourado-dark border-dourado/30'
+                    : 'bg-manto/5 text-manto border-manto/20'}`}
+              >
+                <option value="coordenador">Coordenador</option>
+                <option value="agente">Agente</option>
+              </select>
+              <button onClick={() => removerPerfil(p.id, p.nome)}
+                className="text-ausente text-xs font-semibold border border-ausente/30 rounded-lg px-2 py-1.5 hover:bg-ausente-light transition-colors shrink-0">
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Formulário para adicionar */}
+      <div className="bg-white rounded-2xl border border-cinza-borda shadow-sm overflow-hidden">
+        <div className="px-4 py-2.5 bg-manto/5 border-b border-manto/10">
+          <p className="text-xs font-bold text-dourado uppercase tracking-wider">Adicionar agente</p>
+        </div>
+        <form onSubmit={adicionarPerfil} className="px-4 py-4 space-y-3">
+          <div>
+            <label className="block text-xs font-bold text-manto uppercase tracking-wider mb-1">Nome</label>
+            <input type="text" value={novoNome} onChange={e => setNovoNome(e.target.value)}
+              placeholder="Nome completo"
+              className="w-full px-3 py-2.5 rounded-xl border-[1.5px] border-cinza-borda focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm" required />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-manto uppercase tracking-wider mb-1">UUID do usuário</label>
+            <input type="text" value={novoUuid} onChange={e => setNovoUuid(e.target.value)}
+              placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+              className="w-full px-3 py-2.5 rounded-xl border-[1.5px] border-cinza-borda focus:outline-none focus:border-dourado focus:ring-2 focus:ring-dourado/15 text-sm font-mono" required />
+            <p className="text-xs text-gray-400 mt-1">ℹ️ Supabase → Authentication → Users → copie o User UID</p>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-manto uppercase tracking-wider mb-1">Role</label>
+            <select value={novoRole} onChange={e => setNovoRole(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-xl border-[1.5px] border-cinza-borda focus:outline-none focus:border-dourado text-sm">
+              <option value="agente">Agente</option>
+              <option value="coordenador">Coordenador</option>
+            </select>
+          </div>
+          <button type="submit" disabled={adicionando || !novoUuid.trim() || !novoNome.trim()}
+            className={`w-full py-3 rounded-xl font-bold text-sm transition-all active:scale-95
+              ${adicionando || !novoUuid.trim() || !novoNome.trim()
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-manto text-white hover:bg-manto-dark'}`}>
+            {adicionando ? '⏳ Adicionando...' : '+ Adicionar agente'}
+          </button>
+        </form>
+      </div>
+
+      <p className="text-xs text-gray-400 text-center pb-2">
+        O agente precisa ter conta no Supabase Auth antes de ser adicionado aqui.
+      </p>
     </div>
   )
 }

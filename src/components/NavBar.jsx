@@ -5,11 +5,11 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const ITENS = [
-  { rota: '/',                 icone: '🏠', label: 'Início'   },
-  { rota: '/resumo',           icone: '📊', label: 'Resumo'   },
-  { rota: '/relatorio-dia',    icone: '📋', label: 'Canhoto'  },
-  { rota: '/aniversariantes',  icone: '🎂', label: 'Aniver.'  },
-  { rota: '/admin',            icone: '⚙️', label: 'Admin'    },
+  { rota: '/',              icone: '🏠', label: 'Início'  },
+  { rota: '/lancar',        icone: '💰', label: 'Lançar'  },
+  { rota: '/relatorio-dia', icone: '📋', label: 'Canhoto' },
+  { rota: '/resumo',        icone: '📊', label: 'Resumo'  },
+  { rota: '/admin',         icone: '⚙️', label: 'Admin'   },
 ]
 
 export default function NavBar() {

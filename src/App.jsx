@@ -5,11 +5,13 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { supabase } from './lib/supabase'
+import { PerfilProvider } from './lib/perfil'
 import NavBar from './components/NavBar'
 
-// Importação das páginas (crie cada uma aos poucos)
+// Importação das páginas
 import Login from './pages/Login'
-import Home from './pages/Home'
+import Dashboard from './pages/Dashboard'
+import Home from './pages/Home'         // agora em /lancar
 import Dizimista from './pages/Dizimista'
 import Resumo from './pages/Resumo'
 import RelatorioDia from './pages/RelatorioDia'
@@ -18,6 +20,9 @@ import Pix from './pages/Pix'
 import Admin from './pages/Admin'
 import Consulta from './pages/Consulta'
 import Aniversariantes from './pages/Aniversariantes'
+
+// Placeholder para telas ainda não construídas (mantido por compatibilidade)
+// function EmConstrucao já definida abaixo
 
 // Placeholder para telas ainda não construídas
 function EmConstrucao({ titulo }) {
@@ -77,6 +82,7 @@ export default function App() {
   }, [])
 
   return (
+    <PerfilProvider>
     <BrowserRouter>
       <Routes>
         {/* Login — público */}
@@ -89,6 +95,12 @@ export default function App() {
 
         {/* Rotas protegidas */}
         <Route path="/" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><Dashboard /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/lancar" element={
           <RotaProtegida sessao={sessao}>
             <LayoutComNav><Home /></LayoutComNav>
           </RotaProtegida>
@@ -140,5 +152,6 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
+    </PerfilProvider>
   )
 }
