@@ -187,7 +187,7 @@ export default function RelatorioDia() {
               <button
                 key={label}
                 onClick={() => { fn(); setTimeout(buscar, 50) }}
-                className="text-xs text-blue-600 border border-blue-200 rounded-lg px-2.5 py-1 hover:bg-blue-50 font-semibold"
+                className="text-xs text-manto border border-manto/30 rounded-lg px-2.5 py-1 hover:bg-manto/5 font-semibold"
               >
                 {label}
               </button>
@@ -198,7 +198,7 @@ export default function RelatorioDia() {
             onClick={buscar}
             disabled={carregando}
             className={`w-full py-3 rounded-xl font-bold text-sm text-white transition-all
-              ${carregando ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+              ${carregando ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
           >
             {carregando ? '⏳ Buscando...' : '🔍 Gerar Relatório'}
           </button>
@@ -208,19 +208,19 @@ export default function RelatorioDia() {
         {buscado && (
           <>
             <div className="grid grid-cols-3 gap-2">
-              <div className="bg-blue-700 text-white rounded-xl shadow-md px-3 py-3 text-center">
+              <div className="bg-manto text-white rounded-xl shadow-md px-3 py-3 text-center">
                 <p className="text-blue-200 text-xs font-semibold">Total</p>
                 <p className="text-base font-bold mt-1">{formatarValor(totalGeral)}</p>
                 <p className="text-blue-300 text-xs">{lancamentos.length} lanç.</p>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-green-100 px-3 py-3 text-center">
+              <div className="bg-white rounded-xl shadow-sm border border-pago-border px-3 py-3 text-center">
                 <p className="text-gray-400 text-xs font-semibold">💵 Dinheiro</p>
-                <p className="text-base font-bold text-green-700 mt-1">{formatarValor(totalDinheiro)}</p>
+                <p className="text-base font-bold text-pago mt-1">{formatarValor(totalDinheiro)}</p>
                 <p className="text-gray-400 text-xs">{qtdDinheiro} lanç.</p>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-blue-100 px-3 py-3 text-center">
+              <div className="bg-white rounded-xl shadow-sm border border-pix-border px-3 py-3 text-center">
                 <p className="text-gray-400 text-xs font-semibold">📱 PIX</p>
-                <p className="text-base font-bold text-blue-700 mt-1">{formatarValor(totalPix)}</p>
+                <p className="text-base font-bold text-pix mt-1">{formatarValor(totalPix)}</p>
                 <p className="text-gray-400 text-xs">{qtdPix} lanç.</p>
               </div>
             </div>
@@ -229,7 +229,7 @@ export default function RelatorioDia() {
             {lancamentos.length > 0 && (
               <button
                 onClick={exportarExcel}
-                className="w-full py-3 rounded-xl font-semibold text-sm text-blue-700 border-2 border-blue-200 bg-white hover:bg-blue-50 active:bg-blue-100 transition-all"
+                className="w-full py-3 rounded-xl font-semibold text-sm text-manto border-2 border-dourado/40 bg-white hover:bg-dourado/5 active:bg-dourado/10 transition-all"
               >
                 📤 Exportar Excel
               </button>
@@ -250,8 +250,8 @@ export default function RelatorioDia() {
                   return (
                     <div key={data} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                       {/* Cabeçalho do dia */}
-                      <div className="flex items-center justify-between px-4 py-2.5 bg-gray-50 border-b border-gray-100">
-                        <span className="text-sm font-bold text-blue-900">{data}</span>
+                      <div className="flex items-center justify-between px-4 py-2.5 bg-manto/5 border-b border-manto/10">
+                        <span className="text-sm font-bold text-manto">{data}</span>
                         <span className="text-xs font-semibold text-gray-500">
                           {itens.length} lanç. · {formatarValor(totalDia)}
                         </span>
@@ -265,12 +265,12 @@ export default function RelatorioDia() {
                         >
                           {/* Ícone de pagamento */}
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0
-                            ${l.forma_pagamento === 'pix' ? 'bg-blue-100' : 'bg-green-100'}`}>
+                            ${l.forma_pagamento === 'pix' ? 'bg-pix-light' : 'bg-pago-light'}`}>
                             {l.forma_pagamento === 'pix' ? '📱' : '💵'}
                           </div>
                           {/* Info */}
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-blue-900 truncate">
+                            <p className="text-sm font-semibold text-manto truncate">
                               {l.dizimistas?.nome || '?'}
                             </p>
                             <p className="text-xs text-gray-400">
@@ -279,7 +279,7 @@ export default function RelatorioDia() {
                             </p>
                           </div>
                           {/* Valor */}
-                          <span className="text-sm font-bold text-green-700 shrink-0">
+                          <span className="text-sm font-bold text-pago shrink-0">
                             {formatarValor(l.valor)}
                           </span>
                         </button>

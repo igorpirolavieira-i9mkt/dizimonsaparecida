@@ -187,17 +187,17 @@ export default function Comprovantes() {
         {/* Totais e botão ZIP */}
         {buscou && comprovantes.length > 0 && (
           <div className="flex items-center gap-3">
-            <div className="flex-1 bg-white rounded-xl shadow-sm border border-blue-100 px-4 py-3">
+            <div className="flex-1 bg-white rounded-xl shadow-sm border border-pix-border px-4 py-3">
               <p className="text-xs text-gray-400 font-semibold">
                 {comprovantes.length} comprovante{comprovantes.length !== 1 ? 's' : ''}
               </p>
-              <p className="text-base font-bold text-blue-900 mt-0.5">{formatarValor(totalPix)}</p>
+              <p className="text-base font-bold text-manto mt-0.5">{formatarValor(totalPix)}</p>
             </div>
             <button
               onClick={baixarZip}
               disabled={baixandoZip}
               className={`flex flex-col items-center justify-center gap-1 px-4 py-3 rounded-xl font-bold text-sm text-white shadow-md transition-all shrink-0
-                ${baixandoZip ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+                ${baixandoZip ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
             >
               <span className="text-xl">{baixandoZip ? '⏳' : '📦'}</span>
               <span className="text-xs">{baixandoZip ? 'Gerando...' : 'Baixar ZIP'}</span>
@@ -222,12 +222,12 @@ export default function Comprovantes() {
             {comprovantes.map(c => (
               <div
                 key={c.id}
-                className="bg-white rounded-xl shadow-sm border border-blue-100 px-4 py-3 flex items-center gap-3"
+                className="bg-white rounded-xl shadow-sm border border-pix-border px-4 py-3 flex items-center gap-3"
               >
                 {/* Miniatura clicável */}
                 <button
                   onClick={() => abrirImagem(c)}
-                  className="w-14 h-14 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-2xl shrink-0 hover:bg-blue-100 transition-colors overflow-hidden"
+                  className="w-14 h-14 rounded-lg bg-pix-light border border-pix-border flex items-center justify-center text-2xl shrink-0 hover:opacity-80 transition-opacity overflow-hidden"
                 >
                   🧾
                 </button>
@@ -236,7 +236,7 @@ export default function Comprovantes() {
                 <div className="flex-1 min-w-0">
                   <button
                     onClick={() => navigate(`/dizimista/${c.dizimistas?.id}`)}
-                    className="font-semibold text-blue-900 text-sm truncate block text-left hover:underline"
+                    className="font-semibold text-manto text-sm truncate block text-left hover:underline"
                   >
                     {c.dizimistas?.nome || '?'}
                   </button>
@@ -244,14 +244,14 @@ export default function Comprovantes() {
                     Ref: {MESES_COMPLETOS[(c.mes_referencia || 1) - 1]}/{c.ano_referencia}
                     {' · '}{formatarData(c.data_registro)}
                   </p>
-                  <p className="text-sm font-bold text-green-700 mt-0.5">{formatarValor(c.valor)}</p>
+                  <p className="text-sm font-bold text-pago mt-0.5">{formatarValor(c.valor)}</p>
                 </div>
 
                 {/* Ações */}
                 <div className="flex flex-col gap-1.5 shrink-0">
                   <button
                     onClick={() => abrirImagem(c)}
-                    className="text-blue-600 text-xs border border-blue-200 rounded-lg px-2 py-1 hover:bg-blue-50"
+                    className="text-manto text-xs border border-manto/30 rounded-lg px-2 py-1 hover:bg-manto/5"
                   >
                     👁️ Ver
                   </button>

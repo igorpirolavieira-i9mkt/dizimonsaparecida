@@ -45,15 +45,15 @@ export default function Admin() {
       </header>
 
       {/* Abas */}
-      <div className="flex border-b border-blue-200 bg-white">
+      <div className="flex border-b border-manto/20 bg-white">
         {ABAS.map(a => (
           <button
             key={a.id}
             onClick={() => setAba(a.id)}
             className={`flex-1 py-3 text-xs font-semibold transition-colors border-b-2
               ${aba === a.id
-                ? 'text-blue-700 border-blue-700 bg-blue-50'
-                : 'text-gray-400 border-transparent hover:text-blue-600'
+                ? 'text-manto border-dourado bg-dourado/5'
+                : 'text-gray-400 border-transparent hover:text-manto/70'
               }`}
           >
             {a.label}
@@ -211,11 +211,11 @@ function AbaDizimistas() {
           placeholder="Buscar nome..."
           value={busca}
           onChange={e => setBusca(e.target.value)}
-          className="flex-1 px-3 py-2 rounded-xl border-2 border-blue-200 bg-white text-sm focus:outline-none focus:border-blue-500"
+          className="flex-1 px-3 py-2 rounded-xl border-2 border-manto/20 bg-white text-sm focus:outline-none focus:border-manto"
         />
         <button
           onClick={abrirCriar}
-          className="bg-blue-700 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-blue-800 active:scale-95 transition-all shrink-0"
+          className="bg-manto text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-manto-dark active:scale-95 transition-all shrink-0"
         >
           + Novo
         </button>
@@ -229,7 +229,7 @@ function AbaDizimistas() {
             onClick={() => setFiltroAtivo(val)}
             className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-colors
               ${filtroAtivo === val
-                ? 'bg-blue-700 text-white'
+                ? 'bg-manto text-white'
                 : 'bg-white text-gray-500 border border-gray-200'
               }`}
           >
@@ -256,10 +256,10 @@ function AbaDizimistas() {
           </p>
           {listaFiltrada.map(d => (
             <div key={d.id} className={`bg-white rounded-xl shadow-sm border px-4 py-3 flex items-center gap-3
-              ${!d.ativo ? 'opacity-60 border-gray-200' : 'border-blue-100'}`}>
+              ${!d.ativo ? 'opacity-60 border-gray-200' : 'border-dourado/20'}`}>
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-blue-900 text-sm truncate">{d.nome}</p>
+                <p className="font-semibold text-manto text-sm truncate">{d.nome}</p>
                 <div className="flex gap-3 mt-0.5">
                   {d.data_nascimento && (
                     <span className="text-xs text-gray-400">🎂 {formatarData(d.data_nascimento)}</span>
@@ -273,7 +273,7 @@ function AbaDizimistas() {
               <div className="flex gap-1 shrink-0">
                 <button
                   onClick={() => abrirEditar(d)}
-                  className="text-blue-600 text-xs border border-blue-200 rounded-lg px-2 py-1 hover:bg-blue-50"
+                  className="text-manto text-xs border border-manto/30 rounded-lg px-2 py-1 hover:bg-manto/5"
                 >
                   ✏️ Editar
                 </button>
@@ -281,8 +281,8 @@ function AbaDizimistas() {
                   onClick={() => alternarAtivo(d)}
                   className={`text-xs border rounded-lg px-2 py-1 transition-colors
                     ${d.ativo
-                      ? 'text-red-400 border-red-200 hover:bg-red-50'
-                      : 'text-green-600 border-green-200 hover:bg-green-50'
+                      ? 'text-ausente border-ausente-border hover:bg-ausente-light'
+                      : 'text-pago border-pago-border hover:bg-pago-light'
                     }`}
                 >
                   {d.ativo ? '🚫' : '✅'}
@@ -298,13 +298,13 @@ function AbaDizimistas() {
         <div className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center p-0">
           <div className="bg-white rounded-t-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
             {/* Header do modal */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-              <h2 className="font-bold text-blue-900">
+            <div className="flex items-center justify-between px-5 py-4 bg-manto text-white border-b-[3px] border-dourado">
+              <h2 className="font-bold">
                 {modal.modo === 'criar' ? '+ Novo Dizimista' : '✏️ Editar Dizimista'}
               </h2>
               <button
                 onClick={() => setModal(null)}
-                className="text-gray-400 text-xl hover:text-gray-600"
+                className="text-blue-200 text-xl hover:text-white"
               >
                 ✕
               </button>
@@ -314,68 +314,68 @@ function AbaDizimistas() {
             <div className="px-5 py-4 space-y-4">
               {/* Nome */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">
-                  Nome completo <span className="text-red-500">*</span>
+                <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">
+                  Nome completo <span className="text-ausente">*</span>
                 </label>
                 <input
                   type="text"
                   value={modal.dados.nome}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, nome: e.target.value } }))}
                   placeholder="Nome do dizimista"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
                   autoFocus
                 />
               </div>
 
               {/* Data de nascimento */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">
-                  Data de nascimento <span className="text-gray-300">(dia e mês)</span>
+                <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">
+                  Data de nascimento <span className="text-gray-300 normal-case">(dia e mês)</span>
                 </label>
                 <input
                   type="date"
                   value={modal.dados.data_nascimento}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, data_nascimento: e.target.value } }))}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
                 />
                 <p className="text-xs text-gray-400 mt-1">Use o ano 1900 se quiser apenas o dia/mês.</p>
               </div>
 
               {/* Telefone */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">Telefone / WhatsApp</label>
+                <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">Telefone / WhatsApp</label>
                 <input
                   type="tel"
                   value={modal.dados.telefone}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, telefone: e.target.value } }))}
                   placeholder="(27) 99999-9999"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
                 />
               </div>
 
               {/* E-mail */}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1">E-mail</label>
+                <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">E-mail</label>
                 <input
                   type="email"
                   value={modal.dados.email}
                   onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, email: e.target.value } }))}
                   placeholder="email@exemplo.com"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 text-sm"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto text-sm"
                 />
               </div>
 
               {/* Ativo (só na edição) */}
               {modal.modo === 'editar' && (
-                <div className="flex items-center gap-3 bg-gray-50 rounded-xl px-4 py-3">
+                <div className="flex items-center gap-3 bg-manto/5 rounded-xl px-4 py-3">
                   <input
                     type="checkbox"
                     id="ativo"
                     checked={modal.dados.ativo}
                     onChange={e => setModal(m => ({ ...m, dados: { ...m.dados, ativo: e.target.checked } }))}
-                    className="w-5 h-5 rounded accent-blue-700"
+                    className="w-5 h-5 rounded accent-manto"
                   />
-                  <label htmlFor="ativo" className="text-sm font-semibold text-blue-900 cursor-pointer">
+                  <label htmlFor="ativo" className="text-sm font-semibold text-manto cursor-pointer">
                     Dizimista ativo (aparece nas buscas)
                   </label>
                 </div>
@@ -385,8 +385,8 @@ function AbaDizimistas() {
               {mensagem && (
                 <div className={`rounded-xl px-4 py-3 text-sm font-semibold
                   ${mensagem.tipo === 'sucesso'
-                    ? 'bg-green-50 text-green-700 border border-green-200'
-                    : 'bg-red-50 text-red-700 border border-red-200'
+                    ? 'bg-pago-light text-pago border border-pago-border'
+                    : 'bg-ausente-light text-ausente border border-ausente-border'
                   }`}>
                   {mensagem.tipo === 'sucesso' ? '✅' : '❌'} {mensagem.texto}
                 </div>
@@ -404,7 +404,7 @@ function AbaDizimistas() {
                   onClick={salvar}
                   disabled={salvando}
                   className={`flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all
-                    ${salvando ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+                    ${salvando ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
                 >
                   {salvando ? '⏳ Salvando...' : '💾 Salvar'}
                 </button>
@@ -520,12 +520,12 @@ function AbaImportar() {
   return (
     <div className="px-4 py-4 space-y-4">
       {/* Instruções */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl px-4 py-3">
-        <p className="text-xs font-bold text-blue-800 mb-2">📋 Formato esperado da planilha:</p>
+      <div className="bg-manto/5 border border-manto/20 rounded-xl px-4 py-3">
+        <p className="text-xs font-bold text-manto mb-2">📋 Formato esperado da planilha:</p>
         <div className="overflow-x-auto">
-          <table className="text-xs text-blue-700 w-full">
+          <table className="text-xs text-manto/80 w-full">
             <thead>
-              <tr className="font-bold border-b border-blue-200">
+              <tr className="font-bold border-b border-manto/20">
                 <td className="py-1 pr-3">nome</td>
                 <td className="py-1 pr-3">data_nascimento</td>
                 <td className="py-1 pr-3">telefone</td>
@@ -533,7 +533,7 @@ function AbaImportar() {
               </tr>
             </thead>
             <tbody>
-              <tr className="text-blue-600">
+              <tr className="text-manto/60">
                 <td className="py-1 pr-3">Maria Silva</td>
                 <td className="py-1 pr-3">15/03 ou 15/03/1985</td>
                 <td className="py-1 pr-3">(27) 99999-0000</td>
@@ -542,19 +542,19 @@ function AbaImportar() {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-blue-600 mt-2">Apenas a coluna <strong>nome</strong> é obrigatória.</p>
+        <p className="text-xs text-manto/70 mt-2">Apenas a coluna <strong>nome</strong> é obrigatória.</p>
       </div>
 
       {/* Upload */}
       <div>
         <label className={`flex flex-col items-center gap-2 px-4 py-6 rounded-xl border-2 cursor-pointer transition-all
           ${arquivo
-            ? 'border-green-400 bg-green-50'
-            : 'border-dashed border-blue-300 bg-white hover:bg-blue-50'
+            ? 'border-pago-border bg-pago-light'
+            : 'border-dashed border-manto/30 bg-white hover:bg-manto/5'
           }`}>
           <span className="text-3xl">{arquivo ? '📊' : '📥'}</span>
           <div className="text-center">
-            <p className="text-sm font-semibold text-blue-800">
+            <p className="text-sm font-semibold text-manto">
               {arquivo ? arquivo.name : 'Toque para selecionar a planilha'}
             </p>
             <p className="text-xs text-gray-400 mt-0.5">.xlsx ou .xls</p>
@@ -629,7 +629,7 @@ function AbaImportar() {
           onClick={importar}
           disabled={importando}
           className={`w-full py-4 rounded-xl font-bold text-white text-base shadow-md transition-all
-            ${importando ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+            ${importando ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
         >
           {importando ? '⏳ Importando...' : '📥 Importar Dizimistas'}
         </button>
@@ -727,36 +727,36 @@ function AbaExportar() {
     <div className="px-4 py-4 space-y-4">
       {/* Tipo de exportação */}
       <div>
-        <p className="text-xs font-bold text-gray-500 uppercase mb-2">O que exportar?</p>
+        <p className="text-xs font-bold text-dourado uppercase tracking-wider mb-2">O que exportar?</p>
         <div className="space-y-2">
           <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 cursor-pointer transition-colors
-            ${tipo === 'dizimistas' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'}`}>
+            ${tipo === 'dizimistas' ? 'border-manto bg-manto/5' : 'border-gray-200 bg-white'}`}>
             <input
               type="radio"
               name="tipo"
               value="dizimistas"
               checked={tipo === 'dizimistas'}
               onChange={() => setTipo('dizimistas')}
-              className="accent-blue-700"
+              className="accent-manto"
             />
             <div>
-              <p className="text-sm font-semibold text-blue-900">👥 Lista de Dizimistas</p>
+              <p className="text-sm font-semibold text-manto">👥 Lista de Dizimistas</p>
               <p className="text-xs text-gray-400">Todos os cadastros com dados de contato</p>
             </div>
           </label>
 
           <label className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 cursor-pointer transition-colors
-            ${tipo === 'contribuicoes' ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'}`}>
+            ${tipo === 'contribuicoes' ? 'border-manto bg-manto/5' : 'border-gray-200 bg-white'}`}>
             <input
               type="radio"
               name="tipo"
               value="contribuicoes"
               checked={tipo === 'contribuicoes'}
               onChange={() => setTipo('contribuicoes')}
-              className="accent-blue-700"
+              className="accent-manto"
             />
             <div>
-              <p className="text-sm font-semibold text-blue-900">💰 Contribuições por Ano</p>
+              <p className="text-sm font-semibold text-manto">💰 Contribuições por Ano</p>
               <p className="text-xs text-gray-400">Todos os lançamentos do ano selecionado</p>
             </div>
           </label>
@@ -766,11 +766,11 @@ function AbaExportar() {
       {/* Seletor de ano (só para contribuições) */}
       {tipo === 'contribuicoes' && (
         <div>
-          <label className="block text-xs font-semibold text-gray-500 mb-1">Ano de referência</label>
+          <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">Ano de referência</label>
           <select
             value={ano}
             onChange={e => setAno(Number(e.target.value))}
-            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 bg-gray-50 font-semibold text-sm"
+            className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 font-semibold text-sm"
           >
             {[2023, 2024, 2025, 2026].map(a => (
               <option key={a} value={a}>{a}</option>
@@ -792,7 +792,7 @@ function AbaExportar() {
         onClick={exportar}
         disabled={exportando}
         className={`w-full py-4 rounded-xl font-bold text-white text-base shadow-md transition-all
-          ${exportando ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+          ${exportando ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
       >
         {exportando ? '⏳ Gerando...' : '📤 Baixar Planilha Excel'}
       </button>

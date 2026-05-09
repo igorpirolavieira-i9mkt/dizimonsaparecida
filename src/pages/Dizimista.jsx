@@ -107,7 +107,7 @@ export default function Dizimista() {
       <div className="min-h-screen bg-blue-50 flex items-center justify-center">
         <div className="text-center">
           <div className="text-4xl mb-3 animate-pulse">🕊️</div>
-          <p className="text-blue-600 text-sm">Carregando...</p>
+          <p className="text-manto text-sm">Carregando...</p>
         </div>
       </div>
     )
@@ -119,7 +119,7 @@ export default function Dizimista() {
         <div className="text-center">
           <div className="text-4xl mb-3">❌</div>
           <p className="text-gray-600 font-semibold">Dizimista não encontrado.</p>
-          <button onClick={() => navigate('/')} className="mt-4 text-blue-600 text-sm underline">
+          <button onClick={() => navigate('/')} className="mt-4 text-manto text-sm underline">
             Voltar ao início
           </button>
         </div>
@@ -154,7 +154,7 @@ export default function Dizimista() {
       <div className="px-4 py-4 max-w-lg mx-auto space-y-4">
 
         {/* Card de dados pessoais */}
-        <div className="bg-white rounded-2xl shadow-sm border border-blue-100 px-4 py-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-dourado/20 px-4 py-4">
           <div className="flex items-start justify-between">
             <div className="space-y-1">
               {dizimista.data_nascimento && (
@@ -164,12 +164,12 @@ export default function Dizimista() {
               )}
               {dizimista.telefone && (
                 <p className="text-sm text-gray-600">
-                  📱 <a href={`tel:${dizimista.telefone}`} className="text-blue-600 font-semibold">{dizimista.telefone}</a>
+                  📱 <a href={`tel:${dizimista.telefone}`} className="text-manto font-semibold">{dizimista.telefone}</a>
                 </p>
               )}
               {dizimista.email && (
                 <p className="text-sm text-gray-600 truncate">
-                  ✉️ <span className="text-blue-600">{dizimista.email}</span>
+                  ✉️ <span className="text-manto">{dizimista.email}</span>
                 </p>
               )}
               {!dizimista.data_nascimento && !dizimista.telefone && !dizimista.email && (
@@ -178,7 +178,7 @@ export default function Dizimista() {
             </div>
             <button
               onClick={() => navigate(`/admin`)}
-              className="text-blue-600 text-xs border border-blue-200 rounded-lg px-2 py-1 hover:bg-blue-50 shrink-0 ml-2"
+              className="text-manto text-xs border border-manto/30 rounded-lg px-2 py-1 hover:bg-manto/5 shrink-0 ml-2"
             >
               ✏️ Editar
             </button>
@@ -186,8 +186,8 @@ export default function Dizimista() {
         </div>
 
         {/* Resumo do ano atual */}
-        <div className="bg-blue-700 text-white rounded-2xl shadow-md px-4 py-4">
-          <p className="text-blue-200 text-xs font-semibold uppercase tracking-wide mb-3">
+        <div className="bg-manto text-white rounded-2xl shadow-md px-4 py-4 border-b-[3px] border-dourado">
+          <p className="text-dourado text-xs font-semibold uppercase tracking-wider mb-3">
             Situação {anoVisualizado}
           </p>
           <div className="flex items-end justify-between mb-3">
@@ -203,7 +203,7 @@ export default function Dizimista() {
             <select
               value={anoVisualizado}
               onChange={e => setAnoVisualizado(Number(e.target.value))}
-              className="bg-blue-600 text-white text-sm font-bold rounded-lg px-2 py-1.5 border border-blue-500 focus:outline-none"
+              className="bg-manto-light text-white text-sm font-bold rounded-lg px-2 py-1.5 border border-blue-400 focus:outline-none"
             >
               {anos.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
@@ -221,10 +221,10 @@ export default function Dizimista() {
                   key={mes}
                   className={`rounded-lg px-1 py-1.5 text-center text-xs font-semibold border transition-all
                     ${pago
-                      ? 'bg-green-400 text-white border-green-300'
+                      ? 'bg-pago text-white border-pago/50'
                       : ehAtual
-                      ? 'bg-blue-500 text-white border-blue-400 ring-1 ring-white'
-                      : 'bg-blue-600/50 text-blue-200 border-blue-500'
+                      ? 'bg-dourado/30 text-dourado border-dourado/50 ring-1 ring-dourado/50'
+                      : 'bg-manto-light/60 text-blue-200 border-manto-light'
                     }`}
                 >
                   <div>{mes}</div>
@@ -242,14 +242,14 @@ export default function Dizimista() {
         {/* Botão de lançar múltiplos meses */}
         <button
           onClick={() => setModalMultiplos(true)}
-          className="w-full py-3 rounded-xl font-semibold text-sm text-blue-700 border-2 border-blue-300 bg-white hover:bg-blue-50 active:bg-blue-100 transition-all shadow-sm"
+          className="w-full py-3 rounded-xl font-semibold text-sm text-manto border-2 border-dourado/40 bg-white hover:bg-dourado/5 active:bg-dourado/10 transition-all shadow-sm"
         >
           📅 Lançar múltiplos meses de uma vez
         </button>
 
         {/* Histórico detalhado */}
         <div>
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">
+          <p className="text-xs font-bold text-dourado uppercase tracking-wider mb-2">
             Histórico completo
           </p>
 
@@ -267,8 +267,8 @@ export default function Dizimista() {
                 return (
                   <div key={ano} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                     {/* Cabeçalho do ano */}
-                    <div className="flex items-center justify-between px-4 py-2.5 bg-gray-50 border-b border-gray-100">
-                      <span className="text-sm font-bold text-blue-900">{ano}</span>
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-manto/5 border-b border-manto/10">
+                      <span className="text-sm font-bold text-manto">{ano}</span>
                       <span className="text-xs text-gray-500 font-semibold">
                         Total: {formatarValor(totalAno(ano, mapa))}
                       </span>
@@ -278,11 +278,11 @@ export default function Dizimista() {
                       <div key={c.id} className="flex items-center gap-3 px-4 py-3 border-b border-gray-50 last:border-0">
                         {/* Indicador de forma de pagamento */}
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0
-                          ${c.forma_pagamento === 'pix' ? 'bg-blue-100' : 'bg-green-100'}`}>
+                          ${c.forma_pagamento === 'pix' ? 'bg-pix-light' : 'bg-pago-light'}`}>
                           {c.forma_pagamento === 'pix' ? '📱' : '💵'}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-blue-900">
+                          <p className="text-sm font-semibold text-manto">
                             {MESES_COMPLETOS[c.mes_referencia - 1]}
                           </p>
                           <p className="text-xs text-gray-400">
@@ -292,7 +292,7 @@ export default function Dizimista() {
                             {c.observacao ? ` · ${c.observacao}` : ''}
                           </p>
                         </div>
-                        <span className="text-sm font-bold text-green-700 shrink-0">
+                        <span className="text-sm font-bold text-pago shrink-0">
                           {formatarValor(c.valor)}
                         </span>
                       </div>
@@ -410,23 +410,23 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
       <div className="bg-white rounded-t-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto">
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
+        <div className="flex items-center justify-between px-5 py-4 border-b-[3px] border-dourado sticky top-0 bg-manto text-white z-10">
           <div>
-            <h2 className="font-bold text-blue-900">📅 Múltiplos meses</h2>
-            <p className="text-xs text-gray-400">{dizimista.nome}</p>
+            <h2 className="font-bold">📅 Múltiplos meses</h2>
+            <p className="text-xs text-blue-200">{dizimista.nome}</p>
           </div>
-          <button onClick={onFechar} className="text-gray-400 text-xl hover:text-gray-600">✕</button>
+          <button onClick={onFechar} className="text-blue-200 text-xl hover:text-white">✕</button>
         </div>
 
         <div className="px-5 py-4 space-y-4">
 
           {/* Seletor de ano */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">Ano de referência</label>
+            <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">Ano de referência</label>
             <select
               value={anoRef}
               onChange={e => setAnoRef(Number(e.target.value))}
-              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 bg-gray-50 font-semibold text-sm"
+              className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 font-semibold text-sm"
             >
               {ANOS_DISPONIVEIS.map(a => <option key={a} value={a}>{a}</option>)}
             </select>
@@ -435,11 +435,11 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
           {/* Grid de meses */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-semibold text-gray-500">Selecione os meses</label>
+              <label className="text-xs font-semibold text-dourado uppercase tracking-wider">Selecione os meses</label>
               <button
                 type="button"
                 onClick={selecionarTodosEmAberto}
-                className="text-xs text-blue-600 font-semibold hover:underline"
+                className="text-xs text-manto font-semibold hover:underline"
               >
                 Todos em aberto
               </button>
@@ -457,10 +457,10 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
                     disabled={jaPago}
                     className={`py-2.5 rounded-xl text-xs font-bold border-2 transition-all
                       ${jaPago
-                        ? 'bg-green-100 text-green-600 border-green-200 cursor-not-allowed'
+                        ? 'bg-pago-light text-pago border-pago-border cursor-not-allowed'
                         : selecionado
-                        ? 'bg-blue-700 text-white border-blue-700 shadow-md'
-                        : 'bg-white text-gray-500 border-gray-200 hover:border-blue-300'
+                        ? 'bg-manto text-white border-manto shadow-md'
+                        : 'bg-white text-gray-500 border-gray-200 hover:border-manto/40'
                       }`}
                   >
                     {mes}
@@ -470,7 +470,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
               })}
             </div>
             {mesesSelecionados.length > 0 && (
-              <p className="text-xs text-blue-600 font-semibold mt-2 text-center">
+              <p className="text-xs text-manto font-semibold mt-2 text-center">
                 {mesesSelecionados.length} mês{mesesSelecionados.length > 1 ? 'es' : ''} selecionado{mesesSelecionados.length > 1 ? 's' : ''}
               </p>
             )}
@@ -478,7 +478,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
 
           {/* Valor */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">
+            <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">
               Valor por mês (R$)
             </label>
             <input
@@ -489,7 +489,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
               placeholder="0,00"
               value={valor}
               onChange={e => setValor(e.target.value)}
-              className="w-full px-4 py-3 text-lg font-bold rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 bg-gray-50"
+              className="w-full px-4 py-3 text-lg font-bold rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50"
             />
             {valor && mesesSelecionados.length > 1 && (
               <p className="text-xs text-gray-400 mt-1 text-right">
@@ -501,7 +501,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
 
           {/* Forma de pagamento */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">Forma de pagamento</label>
+            <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">Forma de pagamento</label>
             <div className="grid grid-cols-2 gap-2">
               {['dinheiro','pix'].map(forma => (
                 <button
@@ -511,8 +511,8 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
                   className={`py-3 rounded-xl font-bold text-sm border-2 transition-all
                     ${formaPagamento === forma
                       ? forma === 'pix'
-                        ? 'bg-blue-600 text-white border-blue-600 shadow-md'
-                        : 'bg-green-600 text-white border-green-600 shadow-md'
+                        ? 'bg-pix text-white border-pix shadow-md'
+                        : 'bg-pago text-white border-pago shadow-md'
                       : 'bg-white text-gray-500 border-gray-200'
                     }`}
                 >
@@ -524,13 +524,13 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
 
           {/* Observação */}
           <div>
-            <label className="block text-xs font-semibold text-gray-500 mb-1">Observação (opcional)</label>
+            <label className="block text-xs font-semibold text-dourado uppercase tracking-wider mb-1">Observação (opcional)</label>
             <input
               type="text"
               placeholder="Ex: retroativo, pagamento anual..."
               value={observacao}
               onChange={e => setObservacao(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-blue-500 bg-gray-50 text-sm"
+              className="w-full px-4 py-2.5 rounded-xl border-2 border-gray-200 focus:outline-none focus:border-manto bg-gray-50 text-sm"
             />
           </div>
 
@@ -538,8 +538,8 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
           {mensagem && (
             <div className={`rounded-xl px-4 py-3 text-sm font-semibold
               ${mensagem.tipo === 'sucesso'
-                ? 'bg-green-50 text-green-700 border border-green-200'
-                : 'bg-red-50 text-red-700 border border-red-200'
+                ? 'bg-pago-light text-pago border border-pago-border'
+                : 'bg-ausente-light text-ausente border border-ausente-border'
               }`}>
               {mensagem.tipo === 'sucesso' ? '✅' : '❌'} {mensagem.texto}
             </div>
@@ -557,7 +557,7 @@ function ModalMultiplosMeses({ dizimista, onFechar, onSalvo }) {
               onClick={salvar}
               disabled={salvando}
               className={`flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all
-                ${salvando ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-700 hover:bg-blue-800 active:scale-95'}`}
+                ${salvando ? 'bg-gray-400 cursor-not-allowed' : 'bg-manto hover:bg-manto-dark active:scale-95'}`}
             >
               {salvando ? '⏳ Salvando...' : `💾 Lançar ${mesesSelecionados.length > 0 ? mesesSelecionados.length : ''} mês${mesesSelecionados.length !== 1 ? 'es' : ''}`}
             </button>

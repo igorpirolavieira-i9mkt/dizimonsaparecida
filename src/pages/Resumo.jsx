@@ -160,23 +160,23 @@ export default function Resumo() {
 
         {/* Cards de totais anuais */}
         <div className="grid grid-cols-3 gap-2">
-          <div className="bg-white rounded-xl shadow-sm border border-blue-100 px-3 py-3 text-center">
-            <p className="text-xs text-gray-400 font-semibold">Total {ano}</p>
-            <p className="text-base font-bold text-blue-900 mt-1">{formatarValor(totalAnual())}</p>
+          <div className="bg-manto text-white rounded-xl shadow-md px-3 py-3 text-center">
+            <p className="text-blue-200 text-xs font-semibold">Total {ano}</p>
+            <p className="text-base font-bold mt-1">{formatarValor(totalAnual())}</p>
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-blue-100 px-3 py-3 text-center">
+          <div className="bg-white rounded-xl shadow-sm border border-dourado/20 px-3 py-3 text-center">
             <p className="text-xs text-gray-400 font-semibold">Meses c/ rec.</p>
-            <p className="text-base font-bold text-blue-900 mt-1">{mesesComContribuicao()}/12</p>
+            <p className="text-base font-bold text-manto mt-1">{mesesComContribuicao()}/12</p>
           </div>
-          <div className="bg-white rounded-xl shadow-sm border border-blue-100 px-3 py-3 text-center">
+          <div className="bg-white rounded-xl shadow-sm border border-dourado/20 px-3 py-3 text-center">
             <p className="text-xs text-gray-400 font-semibold">Dizimistas</p>
-            <p className="text-base font-bold text-blue-900 mt-1">{totalDizimistas}</p>
+            <p className="text-base font-bold text-manto mt-1">{totalDizimistas}</p>
           </div>
         </div>
 
         {/* Barra mensal — gráfico simples */}
-        <div className="bg-white rounded-2xl shadow-sm border border-blue-100 px-4 py-4">
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 py-4">
+          <p className="text-xs font-bold text-dourado uppercase tracking-wider mb-3">
             Arrecadação por mês — {ano}
           </p>
           {/* Valor máximo para escala da barra */}
@@ -196,24 +196,24 @@ export default function Resumo() {
                       key={mes}
                       onClick={() => setMesSelecionado(numMes)}
                       className={`w-full flex items-center gap-2 rounded-lg px-2 py-1.5 transition-colors text-left
-                        ${ehSelecionado ? 'bg-blue-50 ring-1 ring-blue-300' : 'hover:bg-gray-50'}`}
+                        ${ehSelecionado ? 'bg-manto/5 ring-1 ring-manto/30' : 'hover:bg-gray-50'}`}
                     >
                       {/* Nome do mês */}
-                      <span className={`text-xs font-semibold w-7 shrink-0 ${ehAtual ? 'text-blue-600' : 'text-gray-400'}`}>
+                      <span className={`text-xs font-semibold w-7 shrink-0 ${ehAtual ? 'text-dourado' : 'text-gray-400'}`}>
                         {mes}{ehAtual ? ' ·' : ''}
                       </span>
                       {/* Barra */}
                       <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden">
                         {largura > 0 && (
                           <div
-                            className={`h-full rounded-full transition-all ${ehSelecionado ? 'bg-blue-600' : 'bg-blue-400'}`}
+                            className={`h-full rounded-full transition-all ${ehSelecionado ? 'bg-manto' : 'bg-manto/50'}`}
                             style={{ width: `${largura}%` }}
                           />
                         )}
                       </div>
                       {/* Valor */}
                       <span className={`text-xs font-bold w-16 text-right shrink-0
-                        ${total > 0 ? 'text-blue-900' : 'text-gray-300'}`}>
+                        ${total > 0 ? 'text-manto' : 'text-gray-300'}`}>
                         {total > 0 ? formatarValor(total) : '—'}
                       </span>
                     </button>
@@ -226,7 +226,7 @@ export default function Resumo() {
 
         {/* Detalhes do mês selecionado */}
         <div>
-          <p className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">
+          <p className="text-xs font-bold text-dourado uppercase tracking-wider mb-2">
             {MESES_COMPLETOS[mesSelecionado - 1]} {ano}
           </p>
 
@@ -238,12 +238,12 @@ export default function Resumo() {
             <div className="space-y-3">
 
               {/* Quem pagou */}
-              <div className="bg-white rounded-2xl shadow-sm border border-green-100 overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-2.5 bg-green-50 border-b border-green-100">
-                  <span className="text-sm font-bold text-green-800">
+              <div className="bg-white rounded-2xl shadow-sm border border-pago-border overflow-hidden">
+                <div className="flex items-center justify-between px-4 py-2.5 bg-pago-light border-b border-pago-border">
+                  <span className="text-sm font-bold text-pago">
                     ✅ Pagaram ({detalhesMes.pagaram.length})
                   </span>
-                  <span className="text-xs font-semibold text-green-700">
+                  <span className="text-xs font-semibold text-pago">
                     {formatarValor(detalhesMes.pagaram.reduce((s, p) => s + p.total, 0))}
                   </span>
                 </div>
@@ -260,9 +260,9 @@ export default function Resumo() {
                         <span className="text-sm">
                           {[...p.formas].map(f => f === 'pix' ? '📱' : '💵').join('')}
                         </span>
-                        <span className="text-sm text-blue-900 font-semibold">{p.nome}</span>
+                        <span className="text-sm text-manto font-semibold">{p.nome}</span>
                       </div>
-                      <span className="text-sm font-bold text-green-700">{formatarValor(p.total)}</span>
+                      <span className="text-sm font-bold text-pago">{formatarValor(p.total)}</span>
                     </button>
                   ))
                 )}
@@ -270,9 +270,9 @@ export default function Resumo() {
 
               {/* Quem não pagou */}
               {detalhesMes.naoPagaram.length > 0 && (
-                <div className="bg-white rounded-2xl shadow-sm border border-red-100 overflow-hidden">
-                  <div className="px-4 py-2.5 bg-red-50 border-b border-red-100">
-                    <span className="text-sm font-bold text-red-700">
+                <div className="bg-white rounded-2xl shadow-sm border border-ausente-border overflow-hidden">
+                  <div className="px-4 py-2.5 bg-ausente-light border-b border-ausente-border">
+                    <span className="text-sm font-bold text-ausente">
                       ⏳ Em aberto ({detalhesMes.naoPagaram.length})
                     </span>
                   </div>
@@ -290,8 +290,8 @@ export default function Resumo() {
               )}
 
               {detalhesMes.naoPagaram.length === 0 && detalhesMes.pagaram.length > 0 && (
-                <div className="text-center py-3 bg-green-50 rounded-xl border border-green-200">
-                  <p className="text-sm font-bold text-green-700">🎉 Todos os dizimistas pagaram este mês!</p>
+                <div className="text-center py-3 bg-pago-light rounded-xl border border-pago-border">
+                  <p className="text-sm font-bold text-pago">🎉 Todos os dizimistas pagaram este mês!</p>
                 </div>
               )}
             </div>
