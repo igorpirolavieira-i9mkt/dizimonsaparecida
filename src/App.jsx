@@ -4,6 +4,7 @@
 
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import { supabase } from './lib/supabase'
 import { PerfilProvider } from './lib/perfil'
 import NavBar from './components/NavBar'
@@ -151,6 +152,7 @@ export default function App() {
         {/* Qualquer rota inválida → home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <SpeedInsights />
     </BrowserRouter>
     </PerfilProvider>
   )
