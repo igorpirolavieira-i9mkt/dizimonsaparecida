@@ -10,9 +10,9 @@ import NavBar from './components/NavBar'
 // Importação das páginas (crie cada uma aos poucos)
 import Login from './pages/Login'
 import Home from './pages/Home'
-// import Dizimista from './pages/Dizimista'       // próximo passo
-// import Resumo from './pages/Resumo'             // próximo passo
-// import RelatorioDia from './pages/RelatorioDia' // próximo passo
+import Dizimista from './pages/Dizimista'
+import Resumo from './pages/Resumo'
+import RelatorioDia from './pages/RelatorioDia'
 // import Comprovantes from './pages/Comprovantes' // próximo passo
 // import Pix from './pages/Pix'                   // próximo passo
 import Admin from './pages/Admin'
@@ -97,19 +97,19 @@ export default function App() {
 
         <Route path="/dizimista/:id" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Perfil do Dizimista" /></LayoutComNav>
+            <LayoutComNav><Dizimista /></LayoutComNav>
           </RotaProtegida>
         } />
 
         <Route path="/resumo" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Resumo Mensal" /></LayoutComNav>
+            <LayoutComNav><Resumo /></LayoutComNav>
           </RotaProtegida>
         } />
 
         <Route path="/relatorio-dia" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Canhoto da Mitra" /></LayoutComNav>
+            <LayoutComNav><RelatorioDia /></LayoutComNav>
           </RotaProtegida>
         } />
 
