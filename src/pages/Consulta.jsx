@@ -3,7 +3,8 @@
 // Segurança: PIN de 4 dígitos = dia + mês do aniversário (ex: 31 de jan → "3101")
 // Fluxo: buscar nome → selecionar → digitar PIN → ver histórico
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez']
@@ -19,6 +20,8 @@ function derivarPin(data_nascimento) {
 }
 
 export default function Consulta() {
+  const [searchParams] = useSearchParams()
+
   const [busca, setBusca] = useState('')
   const [resultados, setResultados] = useState([])
   const [carregando, setCarregando] = useState(false)
@@ -35,6 +38,30 @@ export default function Consulta() {
   const [historico, setHistorico]       = useState([])
   const [carregandoHistorico, setCarregandoHistorico] = useState(false)
   const [anoVisualizado, setAnoVisualizado] = useState(ANO_ATUAL)
+
+  // ── Link compartilhável: /consulta?id=UUID ──────────────────
+  // Se o coordenador compartilhou um link com ?id=, busca o dizimista
+  // diretamente e pula para a etapa de PIN (sem mostrar a lista de busca)
+  useEffect(() => {
+    const idParam = searchParams.get('id')
+    if (!idParam) return
+
+    setCarregando(true)
+    supabase
+      .from('dizimistas')
+      .select('id, nome, data_nascimento')
+      .eq('id', idParam)
+      .eq('ativo', true)
+      .single()
+      .then(({ data, error }) => {
+        if (!error && data) {
+          selecionarParaPin(data)
+          setBusca(data.nome)
+        }
+        setCarregando(false)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // ── Busca por nome ──────────────────────────────────────────
   async function buscar(e) {
