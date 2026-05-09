@@ -17,6 +17,7 @@ import Comprovantes from './pages/Comprovantes'
 import Pix from './pages/Pix'
 import Admin from './pages/Admin'
 import Consulta from './pages/Consulta'
+import Aniversariantes from './pages/Aniversariantes'
 
 // Placeholder para telas ainda não construídas
 function EmConstrucao({ titulo }) {
@@ -126,6 +127,12 @@ export default function App() {
         <Route path="/admin" element={
           <RotaProtegida sessao={sessao}>
             <LayoutComNav><Admin /></LayoutComNav>
+          </RotaProtegida>
+        } />
+
+        <Route path="/aniversariantes" element={
+          <RotaProtegida sessao={sessao}>
+            <LayoutComNav><Aniversariantes /></LayoutComNav>
           </RotaProtegida>
         } />
 
