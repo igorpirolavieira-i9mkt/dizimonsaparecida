@@ -228,12 +228,24 @@ export default function Home() {
           <h1 className="text-base font-bold leading-tight">🕊️ Dízimo NS Aparecida</h1>
           <p className="text-blue-200 text-xs">Lançamento de contribuições</p>
         </div>
-        <button
-          onClick={() => navigate('/admin')}
-          className="text-blue-200 text-xs border border-blue-600 rounded-lg px-3 py-1.5 hover:bg-blue-700 active:bg-blue-900 transition-colors"
-        >
-          Admin
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => navigate('/admin')}
+            className="text-blue-200 text-xs border border-blue-600 rounded-lg px-3 py-1.5 hover:bg-blue-700 active:bg-blue-900 transition-colors"
+          >
+            ⚙️ Admin
+          </button>
+          <button
+            onClick={async () => {
+              if (window.confirm('Deseja sair do sistema?')) {
+                await supabase.auth.signOut()
+              }
+            }}
+            className="text-blue-200 text-xs border border-blue-600 rounded-lg px-3 py-1.5 hover:bg-blue-700 active:bg-blue-900 transition-colors"
+          >
+            🚪
+          </button>
+        </div>
       </header>
 
       <div className="px-4 py-4 max-w-lg mx-auto space-y-4">

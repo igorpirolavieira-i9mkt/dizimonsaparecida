@@ -27,9 +27,21 @@ export default function Admin() {
   return (
     <div className="min-h-screen bg-blue-50">
       {/* Header */}
-      <header className="bg-blue-800 text-white px-4 py-3 shadow-md sticky top-0 z-10">
-        <h1 className="text-base font-bold">⚙️ Administração</h1>
-        <p className="text-blue-200 text-xs">Gerenciar dizimistas</p>
+      <header className="bg-blue-800 text-white px-4 py-3 shadow-md sticky top-0 z-10 flex items-center justify-between">
+        <div>
+          <h1 className="text-base font-bold">⚙️ Administração</h1>
+          <p className="text-blue-200 text-xs">Gerenciar dizimistas</p>
+        </div>
+        <button
+          onClick={async () => {
+            if (window.confirm('Deseja sair do sistema?')) {
+              await supabase.auth.signOut()
+            }
+          }}
+          className="text-blue-200 text-xs border border-blue-600 rounded-lg px-3 py-1.5 hover:bg-blue-700 active:bg-blue-900 transition-colors"
+        >
+          Sair 🚪
+        </button>
       </header>
 
       {/* Abas */}
