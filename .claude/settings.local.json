@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\corre\\\\Downloads\\\\app dizimo\" status)",
+      "Bash(gh repo *)",
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git ls-tree *)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git rebase *)",
+      "Bash(git branch *)",
+      "Bash(npm install *)",
+      "Bash(npx vite *)",
+      "mcp__f0f2e0b7-3562-4130-8770-5eac484a86ab__list_teams",
+      "mcp__f0f2e0b7-3562-4130-8770-5eac484a86ab__deploy_to_vercel",
+      "Bash(npx vercel *)"
+    ]
+  }
+}

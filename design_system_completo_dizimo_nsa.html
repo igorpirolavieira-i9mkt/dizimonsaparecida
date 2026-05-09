@@ -1,0 +1,490 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --azul-manto:#1A3A6B;
+  --azul-ceu:#2D6BA8;
+  --azul-claro:#5B9BD5;
+  --azul-palido:#D6E8F7;
+  --dourado:#C9A84C;
+  --dourado-claro:#F0D98C;
+  --dourado-palido:#FBF3D8;
+  --branco-osso:#FAFAF7;
+  --cinza-suave:#F0EEE9;
+  --cinza-medio:#B0ADA5;
+  --texto-escuro:#1C1A16;
+  --verde-pago:#3A7D44;
+  --verde-palido:#D4EDD8;
+  --teal-pix:#1B7A6E;
+  --teal-palido:#C8EAE6;
+  --vermelho-ausente:#9B3030;
+  --vermelho-palido:#F5DADA;
+  --amber-atencao:#8C5E0A;
+  --amber-palido:#FBF0D0;
+}
+body{font-family:var(--font-sans);background:transparent;color:var(--texto-escuro)}
+.secao{margin-bottom:2.5rem}
+.label-secao{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.label-secao::after{content:'';flex:1;height:0.5px;background:var(--color-border-tertiary)}
+.divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:2rem 0}
+
+/* FUNDAMENTO */
+.fundamento-card{background:var(--dourado-palido);border:0.5px solid var(--dourado-claro);border-radius:12px;padding:14px 16px}
+.fundamento-titulo{font-size:13px;font-weight:500;color:var(--amber-atencao);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.fundamento-texto{font-size:12px;color:#6B5520;line-height:1.6}
+
+/* PALETA */
+.paleta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cor-item{border-radius:8px;overflow:hidden;border:0.5px solid var(--color-border-tertiary)}
+.cor-amostra{height:40px;display:flex;align-items:center;justify-content:center;gap:4px}
+.cor-info{padding:6px 8px;background:var(--color-background-primary)}
+.cor-nome{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.cor-desc{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+.cor-hex{font-size:10px;color:var(--color-text-tertiary);font-family:var(--font-mono)}
+
+/* TIPOGRAFIA */
+.tipo-row{margin-bottom:12px;padding-bottom:12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tipo-row:last-child{border:none;margin:0;padding:0}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:500}
+.badge-pago{background:var(--verde-palido);color:var(--verde-pago)}
+.badge-pix{background:var(--teal-palido);color:var(--teal-pix)}
+.badge-ausente{background:var(--vermelho-palido);color:var(--vermelho-ausente)}
+.badge-destaque{background:var(--azul-palido);color:var(--azul-manto)}
+.badge-atencao{background:var(--amber-palido);color:var(--amber-atencao)}
+
+/* BOTÕES */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:500;border:0.5px solid transparent;cursor:pointer}
+.btn-primario{background:var(--azul-manto);color:#fff;border-color:var(--azul-manto)}
+.btn-dourado{background:var(--dourado);color:#fff;border-color:var(--dourado)}
+.btn-ghost{background:transparent;color:var(--azul-manto);border-color:var(--azul-claro)}
+.btn-danger{background:var(--vermelho-palido);color:var(--vermelho-ausente);border-color:#DBA8A8}
+.botoes-row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* MESES */
+.m-grid{display:flex;gap:3px}
+.m{width:26px;height:24px;border-radius:4px;font-size:10px;font-weight:500;display:flex;align-items:center;justify-content:center}
+.m-d{background:var(--verde-palido);color:var(--verde-pago)}
+.m-p{background:var(--teal-palido);color:var(--teal-pix)}
+.m-a{background:var(--cinza-suave);color:var(--cinza-medio);border:0.5px solid var(--color-border-tertiary)}
+.m-h{background:var(--azul-manto);color:#fff}
+
+/* PHONE MOCKUPS */
+.phone{width:100%;background:var(--color-background-secondary);border-radius:12px;padding:10px;margin-bottom:16px}
+.screen{background:#F7F8FA;border-radius:10px;overflow:hidden;min-height:300px}
+
+/* HEADER TELA */
+.tela-header{background:var(--azul-manto);padding:14px 16px 12px;position:relative;overflow:hidden}
+.tela-header::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(201,168,76,0.15)}
+.tela-header::after{content:'';position:absolute;bottom:-30px;right:10px;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,0.08)}
+.th-titulo{color:#F0D98C;font-size:17px;font-weight:500;position:relative}
+.th-sub{color:#5B9BD5;font-size:11px;margin-top:2px;position:relative}
+.th-icon{color:rgba(240,217,140,0.6);font-size:30px;position:absolute;right:16px;top:50%;transform:translateY(-50%)}
+
+/* SEARCH */
+.search{background:#fff;margin:10px;border-radius:8px;border:0.5px solid #D6E8F7;display:flex;align-items:center;gap:8px;padding:8px 12px}
+.search i{color:var(--azul-claro);font-size:16px}
+.search span{font-size:13px;color:#A0AEC0}
+
+/* PERSON CARD */
+.person{background:#fff;margin:0 10px 8px;border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 12px;cursor:pointer}
+.p-nome{font-size:13px;font-weight:500;color:var(--texto-escuro);margin-bottom:6px}
+.p-detalhe{font-size:11px;color:var(--color-text-secondary);margin-bottom:6px}
+
+/* BOTTOM NAV */
+.bnav{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:0.5px solid var(--color-border-tertiary);padding:4px 0 2px}
+.bn{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:9px;color:var(--cinza-medio);padding:4px 0}
+.bn.ativo{color:var(--azul-manto)}
+.bn i{font-size:20px}
+
+/* MÉTRICAS */
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:10px}
+.metric{background:#fff;border-radius:8px;padding:10px 12px;border:0.5px solid var(--color-border-tertiary)}
+.m-label{font-size:10px;color:var(--color-text-secondary);margin-bottom:4px}
+.m-valor{font-size:18px;font-weight:500}
+
+/* CARDS LATERAL */
+.card-lateral{background:var(--color-background-primary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);padding:14px 16px;margin-bottom:8px}
+.card-titulo{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.card-sub{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+
+/* DIVISOR NOME SEÇÃO */
+.tela-section{padding:6px 10px;background:var(--cinza-suave);font-size:10px;font-weight:500;color:var(--cinza-medio);text-transform:uppercase;letter-spacing:0.07em}
+
+/* ITEM LISTA */
+.lista-item{background:#fff;margin:0 10px 6px;border-radius:8px;border:0.5px solid var(--color-border-tertiary);padding:10px 12px;display:flex;align-items:center;justify-content:space-between}
+.li-nome{font-size:12px;font-weight:500;color:var(--texto-escuro)}
+.li-val{font-size:12px;font-weight:500;color:var(--azul-manto)}
+.li-data{font-size:10px;color:var(--cinza-medio);margin-top:1px}
+.li-forma{font-size:10px;padding:2px 8px;border-radius:10px}
+.li-d{background:var(--verde-palido);color:var(--verde-pago)}
+.li-p{background:var(--teal-palido);color:var(--teal-pix)}
+
+/* PIX */
+.qr-box{background:#fff;border:0.5px solid var(--color-border-tertiary);border-radius:10px;margin:10px;padding:14px;text-align:center}
+.qr-mock{width:100px;height:100px;margin:0 auto 10px;background:var(--cinza-suave);border-radius:6px;display:flex;align-items:center;justify-content:center;border:2px solid var(--azul-manto)}
+.qr-mock i{font-size:48px;color:var(--azul-manto)}
+.qr-chave{font-size:11px;color:var(--cinza-medio);margin-top:4px}
+.qr-receb{font-size:13px;font-weight:500;color:var(--azul-manto);margin-top:2px}
+.btn-copiar{background:var(--azul-manto);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:500;width:100%;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:6px}
+</style>
+
+<h2 class="sr-only">Design system completo do App Dízimo NS Aparecida — fundamentado na identidade visual de Nossa Senhora Aparecida</h2>
+
+<div style="padding:1rem 0">
+
+  <!-- FUNDAMENTO -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-star" aria-hidden="true" style="font-size:13px;color:var(--dourado)"></i>Fundamento da identidade visual</p>
+    <div class="fundamento-card">
+      <p class="fundamento-titulo"><i class="ti ti-bible" aria-hidden="true" style="font-size:14px"></i>Nossa Senhora Aparecida — Padroeira do Brasil</p>
+      <p class="fundamento-texto">O manto azul anil doado pela Princesa Isabel em 1868 se tornou a identidade visual oficial da santa. <strong style="color:var(--amber-atencao)">Azul = o céu, a presença maternal de Maria. Dourado = a realeza, "Rainha do Céu e da Terra".</strong> O branco representa a santidade e a paz. São essas três cores — azul profundo, dourado e branco — que fundamentam toda a paleta do app, conectando cada tela à identidade da comunidade.</p>
+    </div>
+  </div>
+
+  <!-- PALETA -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-palette" aria-hidden="true" style="font-size:13px"></i>Paleta de cores — significado real</p>
+    <div class="paleta-grid">
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--azul-manto)">
+          <i class="ti ti-moon-stars" aria-hidden="true" style="font-size:18px;color:var(--dourado-claro)"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Azul manto</p>
+          <p class="cor-desc">Primário — header, ações</p>
+          <p class="cor-hex">#1A3A6B</p>
+        </div>
+      </div>
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--dourado)">
+          <i class="ti ti-crown" aria-hidden="true" style="font-size:18px;color:#fff"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Dourado real</p>
+          <p class="cor-desc">Realeza — destaques, CTAs</p>
+          <p class="cor-hex">#C9A84C</p>
+        </div>
+      </div>
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--verde-palido);border-bottom:2px solid var(--verde-pago)">
+          <i class="ti ti-check" aria-hidden="true" style="font-size:18px;color:var(--verde-pago)"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Verde — pago (dinheiro)</p>
+          <p class="cor-desc">Confirmação, presença</p>
+          <p class="cor-hex">#3A7D44 / #D4EDD8</p>
+        </div>
+      </div>
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--teal-palido);border-bottom:2px solid var(--teal-pix)">
+          <i class="ti ti-qrcode" aria-hidden="true" style="font-size:18px;color:var(--teal-pix)"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Teal — pago (PIX)</p>
+          <p class="cor-desc">Digital, transferência</p>
+          <p class="cor-hex">#1B7A6E / #C8EAE6</p>
+        </div>
+      </div>
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--vermelho-palido);border-bottom:2px solid var(--vermelho-ausente)">
+          <i class="ti ti-minus" aria-hidden="true" style="font-size:18px;color:var(--vermelho-ausente)"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Vermelho — ausente</p>
+          <p class="cor-desc">Mês sem contribuição</p>
+          <p class="cor-hex">#9B3030 / #F5DADA</p>
+        </div>
+      </div>
+      <div class="cor-item">
+        <div class="cor-amostra" style="background:var(--dourado-palido);border-bottom:2px solid var(--dourado)">
+          <i class="ti ti-alert-triangle" aria-hidden="true" style="font-size:18px;color:var(--amber-atencao)"></i>
+        </div>
+        <div class="cor-info">
+          <p class="cor-nome">Âmbar — atenção</p>
+          <p class="cor-desc">Pendências, alertas</p>
+          <p class="cor-hex">#8C5E0A / #FBF0D0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- TIPOGRAFIA -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-typography" aria-hidden="true" style="font-size:13px"></i>Tipografia e hierarquia</p>
+    <div class="tipo-row">
+      <p style="font-size:22px;font-weight:500;color:var(--azul-manto)">Lançar dízimo</p>
+      <p style="font-size:10px;color:var(--cinza-medio);margin-top:2px">Título de tela — 22px / 500 / azul manto</p>
+    </div>
+    <div class="tipo-row">
+      <p style="font-size:16px;font-weight:500;color:var(--texto-escuro)">Marcio Antonio Beato</p>
+      <p style="font-size:10px;color:var(--cinza-medio);margin-top:2px">Nome do dizimista — 16px / 500</p>
+    </div>
+    <div class="tipo-row">
+      <p style="font-size:13px;color:var(--color-text-secondary)">NS Aparecida · Maio 2025</p>
+      <p style="font-size:10px;color:var(--cinza-medio);margin-top:2px">Subtítulo / contexto — 13px / 400 / muted</p>
+    </div>
+    <div class="tipo-row">
+      <p style="font-size:11px;font-weight:500;color:var(--dourado);text-transform:uppercase;letter-spacing:0.07em">Contribuições do mês</p>
+      <p style="font-size:10px;color:var(--cinza-medio);margin-top:2px">Label de seção — 11px / 500 / dourado / uppercase</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BADGES -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-tag" aria-hidden="true" style="font-size:13px"></i>Badges e status</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="badge badge-pago"><i class="ti ti-check" style="font-size:11px"></i>Dinheiro</span>
+      <span class="badge badge-pix"><i class="ti ti-qrcode" style="font-size:11px"></i>PIX</span>
+      <span class="badge badge-ausente"><i class="ti ti-minus" style="font-size:11px"></i>Ausente</span>
+      <span class="badge badge-destaque"><i class="ti ti-calendar" style="font-size:11px"></i>Mês atual</span>
+      <span class="badge badge-atencao"><i class="ti ti-alert-triangle" style="font-size:11px"></i>Pendente</span>
+    </div>
+    <p class="label-secao" style="margin-top:14px"><i class="ti ti-calendar" aria-hidden="true" style="font-size:13px"></i>Miniatura de meses (12 por dizimista)</p>
+    <div class="m-grid">
+      <div class="m m-d" title="Janeiro - dinheiro">J</div>
+      <div class="m m-p" title="Fevereiro - PIX">F</div>
+      <div class="m m-d" title="Março - dinheiro">M</div>
+      <div class="m m-d" title="Abril - dinheiro">A</div>
+      <div class="m m-h" title="Maio - mês atual">M</div>
+      <div class="m m-a">J</div>
+      <div class="m m-a">J</div>
+      <div class="m m-a">A</div>
+      <div class="m m-a">S</div>
+      <div class="m m-a">O</div>
+      <div class="m m-a">N</div>
+      <div class="m m-a">D</div>
+    </div>
+    <p style="font-size:11px;color:var(--cinza-medio);margin-top:6px">Verde = dinheiro · Teal = PIX · Azul = mês atual · Cinza = ausente</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BOTÕES -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-cursor-text" aria-hidden="true" style="font-size:13px"></i>Botões</p>
+    <div class="botoes-row" style="margin-bottom:8px">
+      <button class="btn btn-primario"><i class="ti ti-plus" style="font-size:14px"></i>Lançar dízimo</button>
+      <button class="btn btn-dourado"><i class="ti ti-download" style="font-size:14px"></i>Exportar</button>
+    </div>
+    <div class="botoes-row">
+      <button class="btn btn-ghost"><i class="ti ti-list" style="font-size:14px"></i>Ver histórico</button>
+      <button class="btn btn-danger"><i class="ti ti-trash" style="font-size:14px"></i>Excluir</button>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MOCKUPS LADO A LADO EM TIRAS -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-device-mobile" aria-hidden="true" style="font-size:13px"></i>Tela 1 — Home (lançamento)</p>
+    <div class="phone">
+      <div class="screen">
+        <div class="tela-header" style="position:relative">
+          <div>
+            <p class="th-titulo">Lançar dízimo</p>
+            <p class="th-sub">NS Aparecida · Maio 2025</p>
+          </div>
+          <i class="ti ti-moon-stars th-icon" aria-hidden="true"></i>
+        </div>
+        <!-- Detalhe dourado no header -->
+        <div style="height:3px;background:linear-gradient(90deg,var(--dourado),var(--dourado-claro),var(--dourado))"></div>
+        <div class="search">
+          <i class="ti ti-search" aria-hidden="true"></i>
+          <span>Buscar pelo nome...</span>
+        </div>
+        <div class="tela-section">63 dizimistas ativos</div>
+        <div class="person">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <p class="p-nome">Marcio Antonio Beato</p>
+            <span class="badge badge-destaque" style="font-size:10px;padding:2px 7px">Mês atual</span>
+          </div>
+          <div class="m-grid" style="margin-bottom:4px">
+            <div class="m m-d">J</div><div class="m m-p">F</div><div class="m m-d">M</div><div class="m m-d">A</div>
+            <div class="m m-h">M</div><div class="m m-a">J</div><div class="m m-a">J</div><div class="m m-a">A</div>
+            <div class="m m-a">S</div><div class="m m-a">O</div><div class="m m-a">N</div><div class="m m-a">D</div>
+          </div>
+          <p style="font-size:10px;color:var(--color-text-secondary)">Total 2025 · R$ 480,00</p>
+        </div>
+        <div class="person">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+            <p class="p-nome">Luziana Beato</p>
+            <span class="badge badge-atencao" style="font-size:10px;padding:2px 7px"><i class="ti ti-alert-triangle" style="font-size:9px"></i>Pendente</span>
+          </div>
+          <div class="m-grid" style="margin-bottom:4px">
+            <div class="m m-a">J</div><div class="m m-d">F</div><div class="m m-p">M</div><div class="m m-a">A</div>
+            <div class="m m-h">M</div><div class="m m-a">J</div><div class="m m-a">J</div><div class="m m-a">A</div>
+            <div class="m m-a">S</div><div class="m m-a">O</div><div class="m m-a">N</div><div class="m m-a">D</div>
+          </div>
+          <p style="font-size:10px;color:var(--color-text-secondary)">Total 2025 · R$ 240,00</p>
+        </div>
+        <!-- FAB -->
+        <div style="display:flex;justify-content:flex-end;padding:8px 12px 6px">
+          <div style="width:46px;height:46px;background:var(--dourado);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(201,168,76,0.4)">
+            <i class="ti ti-plus" style="font-size:22px;color:#fff" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="bnav">
+          <div class="bn ativo"><i class="ti ti-home" aria-hidden="true"></i>Lançar</div>
+          <div class="bn"><i class="ti ti-chart-bar" aria-hidden="true"></i>Resumo</div>
+          <div class="bn"><i class="ti ti-receipt" aria-hidden="true"></i>Canhoto</div>
+          <div class="bn"><i class="ti ti-qrcode" aria-hidden="true"></i>PIX</div>
+          <div class="bn"><i class="ti ti-settings" aria-hidden="true"></i>Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-device-mobile" aria-hidden="true" style="font-size:13px"></i>Tela 2 — Resumo mensal</p>
+    <div class="phone">
+      <div class="screen">
+        <div class="tela-header" style="position:relative">
+          <div>
+            <p class="th-titulo">Resumo — Maio 2025</p>
+            <p class="th-sub">Referência de contribuições</p>
+          </div>
+          <i class="ti ti-chart-pie th-icon" aria-hidden="true"></i>
+        </div>
+        <div style="height:3px;background:linear-gradient(90deg,var(--dourado),var(--dourado-claro),var(--dourado))"></div>
+        <div class="metrics">
+          <div class="metric">
+            <p class="m-label">Total arrecadado</p>
+            <p class="m-valor" style="color:var(--azul-manto)">R$ 3.840</p>
+          </div>
+          <div class="metric">
+            <p class="m-label">Contribuíram</p>
+            <p class="m-valor" style="color:var(--verde-pago)">48 / 63</p>
+          </div>
+          <div class="metric">
+            <p class="m-label">Dinheiro</p>
+            <p class="m-valor">R$ 2.100</p>
+          </div>
+          <div class="metric">
+            <p class="m-label">PIX</p>
+            <p class="m-valor" style="color:var(--teal-pix)">R$ 1.740</p>
+          </div>
+        </div>
+        <div class="tela-section">Não contribuíram (15)</div>
+        <div class="lista-item">
+          <div><p class="li-nome">Cirlene Paixão</p><p class="li-data">Último: abr / 2025</p></div>
+          <span class="badge badge-ausente" style="font-size:10px;padding:2px 7px">Ausente</span>
+        </div>
+        <div class="lista-item">
+          <div><p class="li-nome">Sydney Paixão</p><p class="li-data">Último: jan / 2025</p></div>
+          <span class="badge badge-ausente" style="font-size:10px;padding:2px 7px">Ausente</span>
+        </div>
+        <div class="bnav">
+          <div class="bn"><i class="ti ti-home" aria-hidden="true"></i>Lançar</div>
+          <div class="bn ativo"><i class="ti ti-chart-bar" aria-hidden="true"></i>Resumo</div>
+          <div class="bn"><i class="ti ti-receipt" aria-hidden="true"></i>Canhoto</div>
+          <div class="bn"><i class="ti ti-qrcode" aria-hidden="true"></i>PIX</div>
+          <div class="bn"><i class="ti ti-settings" aria-hidden="true"></i>Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-device-mobile" aria-hidden="true" style="font-size:13px"></i>Tela 3 — Canhoto da mitra</p>
+    <div class="phone">
+      <div class="screen">
+        <div class="tela-header" style="position:relative">
+          <div>
+            <p class="th-titulo">Canhoto da mitra</p>
+            <p class="th-sub">09/05/2025 — por data de registro</p>
+          </div>
+          <i class="ti ti-receipt th-icon" aria-hidden="true"></i>
+        </div>
+        <div style="height:3px;background:linear-gradient(90deg,var(--dourado),var(--dourado-claro),var(--dourado))"></div>
+        <div style="padding:10px 10px 4px;display:flex;justify-content:space-between;align-items:center">
+          <p style="font-size:13px;font-weight:500;color:var(--azul-manto)">Total do dia: R$ 720,00</p>
+          <button class="btn btn-dourado" style="padding:5px 10px;font-size:11px"><i class="ti ti-download" style="font-size:12px"></i>Excel</button>
+        </div>
+        <div class="tela-section">09/05/2025 · 6 contribuições</div>
+        <div class="lista-item">
+          <div><p class="li-nome">Marcio Antonio Beato</p><p class="li-data">Ref: Mai 2025 · 09/05 14h22</p></div>
+          <div style="text-align:right"><p class="li-val">R$ 150,00</p><span class="li-forma li-d">dinheiro</span></div>
+        </div>
+        <div class="lista-item">
+          <div><p class="li-nome">Rodrigo Silveira</p><p class="li-data">Ref: Mai 2025 · 09/05 14h35</p></div>
+          <div style="text-align:right"><p class="li-val">R$ 80,00</p><span class="li-forma li-p">PIX</span></div>
+        </div>
+        <div class="lista-item">
+          <div><p class="li-nome">Darci Bertoldi</p><p class="li-data">Ref: Abr 2025 · 09/05 14h41</p></div>
+          <div style="text-align:right"><p class="li-val">R$ 100,00</p><span class="li-forma li-d">dinheiro</span></div>
+        </div>
+        <div class="bnav">
+          <div class="bn"><i class="ti ti-home" aria-hidden="true"></i>Lançar</div>
+          <div class="bn"><i class="ti ti-chart-bar" aria-hidden="true"></i>Resumo</div>
+          <div class="bn ativo"><i class="ti ti-receipt" aria-hidden="true"></i>Canhoto</div>
+          <div class="bn"><i class="ti ti-qrcode" aria-hidden="true"></i>PIX</div>
+          <div class="bn"><i class="ti ti-settings" aria-hidden="true"></i>Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-device-mobile" aria-hidden="true" style="font-size:13px"></i>Tela 4 — Gerador PIX</p>
+    <div class="phone">
+      <div class="screen">
+        <div class="tela-header" style="position:relative">
+          <div>
+            <p class="th-titulo">PIX — Dízimo</p>
+            <p class="th-sub">Paróquia São Tiago Maior</p>
+          </div>
+          <i class="ti ti-qrcode th-icon" aria-hidden="true"></i>
+        </div>
+        <div style="height:3px;background:linear-gradient(90deg,var(--dourado),var(--dourado-claro),var(--dourado))"></div>
+        <div class="qr-box">
+          <p style="font-size:11px;color:var(--cinza-medio);margin-bottom:10px">Mostre ao fiel para ele escanear</p>
+          <div class="qr-mock">
+            <i class="ti ti-qrcode" aria-hidden="true"></i>
+          </div>
+          <p class="qr-receb">Paróquia São Tiago Maior</p>
+          <p class="qr-chave">Chave PIX: (27) 99705-1725</p>
+          <p style="font-size:11px;color:var(--verde-pago);margin-top:6px;font-weight:500"><i class="ti ti-info-circle" style="font-size:11px;vertical-align:-1px"></i> Fiel digita o valor no app do banco</p>
+          <button class="btn-copiar"><i class="ti ti-copy" style="font-size:14px"></i>Copiar código PIX</button>
+        </div>
+        <div class="bnav">
+          <div class="bn"><i class="ti ti-home" aria-hidden="true"></i>Lançar</div>
+          <div class="bn"><i class="ti ti-chart-bar" aria-hidden="true"></i>Resumo</div>
+          <div class="bn"><i class="ti ti-receipt" aria-hidden="true"></i>Canhoto</div>
+          <div class="bn ativo"><i class="ti ti-qrcode" aria-hidden="true"></i>PIX</div>
+          <div class="bn"><i class="ti ti-settings" aria-hidden="true"></i>Admin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ELEMENTOS ESTRUTURAIS -->
+  <div class="secao">
+    <p class="label-secao"><i class="ti ti-components" aria-hidden="true" style="font-size:13px"></i>Elementos estruturais novos</p>
+    <div class="card-lateral">
+      <p class="card-titulo"><i class="ti ti-paint" aria-hidden="true" style="font-size:14px;color:var(--dourado)"></i>Faixa dourada (marca registrada)</p>
+      <div style="height:3px;background:linear-gradient(90deg,var(--dourado),var(--dourado-claro),var(--dourado));border-radius:2px;margin-bottom:6px"></div>
+      <p class="card-sub">Linha de 3px logo abaixo do header azul em todas as telas — conecta o azul do manto com o dourado da coroa</p>
+    </div>
+    <div class="card-lateral">
+      <p class="card-titulo"><i class="ti ti-circle" aria-hidden="true" style="font-size:14px;color:var(--azul-claro)"></i>Esferas decorativas no header</p>
+      <p class="card-sub">Círculos semitransparentes dourados no canto superior direito do cabeçalho — remetem ao bordado do manto</p>
+    </div>
+    <div class="card-lateral">
+      <p class="card-titulo"><i class="ti ti-ripple" aria-hidden="true" style="font-size:14px;color:var(--dourado)"></i>FAB dourado (botão de ação principal)</p>
+      <p class="card-sub">O botão flutuante "+" usa o dourado ao invés do azul — hierarquia visual clara e referência à coroa real</p>
+    </div>
+    <div class="card-lateral" style="margin:0">
+      <p class="card-titulo"><i class="ti ti-letter-case" aria-hidden="true" style="font-size:14px;color:var(--dourado)"></i>Labels de seção em dourado</p>
+      <p class="card-sub">Títulos de grupo (ex: "63 dizimistas ativos") em uppercase dourado — hierarquia sem agressividade visual</p>
+    </div>
+  </div>
+
+</div>

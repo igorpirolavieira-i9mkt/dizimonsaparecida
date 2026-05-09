@@ -135,7 +135,7 @@ export default function Dizimista() {
     <div className="min-h-screen bg-blue-50">
 
       {/* Header */}
-      <header className="bg-blue-800 text-white px-4 py-3 shadow-md sticky top-0 z-10 flex items-center gap-3">
+      <header className="bg-manto text-white px-4 py-3 shadow-md sticky top-0 z-10 border-b-[3px] border-dourado flex items-center gap-3">
         <button
           onClick={() => navigate(-1)}
           className="text-blue-200 hover:text-white text-xl leading-none"
