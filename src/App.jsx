@@ -15,7 +15,7 @@ import Home from './pages/Home'
 // import RelatorioDia from './pages/RelatorioDia' // próximo passo
 // import Comprovantes from './pages/Comprovantes' // próximo passo
 // import Pix from './pages/Pix'                   // próximo passo
-// import Admin from './pages/Admin'               // próximo passo
+import Admin from './pages/Admin'
 // import Consulta from './pages/Consulta'         // sem login
 
 // Placeholder para telas ainda não construídas
@@ -127,7 +127,7 @@ export default function App() {
 
         <Route path="/admin" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Administração" /></LayoutComNav>
+            <LayoutComNav><Admin /></LayoutComNav>
           </RotaProtegida>
         } />
 
