@@ -14,9 +14,9 @@ import Dizimista from './pages/Dizimista'
 import Resumo from './pages/Resumo'
 import RelatorioDia from './pages/RelatorioDia'
 // import Comprovantes from './pages/Comprovantes' // próximo passo
-// import Pix from './pages/Pix'                   // próximo passo
+import Pix from './pages/Pix'
 import Admin from './pages/Admin'
-// import Consulta from './pages/Consulta'         // sem login
+import Consulta from './pages/Consulta'
 
 // Placeholder para telas ainda não construídas
 function EmConstrucao({ titulo }) {
@@ -84,9 +84,7 @@ export default function App() {
         } />
 
         {/* Consulta pública — sem login */}
-        <Route path="/consulta" element={
-          <EmConstrucao titulo="Consulta Pública" />
-        } />
+        <Route path="/consulta" element={<Consulta />} />
 
         {/* Rotas protegidas */}
         <Route path="/" element={
@@ -121,7 +119,7 @@ export default function App() {
 
         <Route path="/pix" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Gerador PIX" /></LayoutComNav>
+            <LayoutComNav><Pix /></LayoutComNav>
           </RotaProtegida>
         } />
 
