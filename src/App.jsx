@@ -13,7 +13,7 @@ import Home from './pages/Home'
 import Dizimista from './pages/Dizimista'
 import Resumo from './pages/Resumo'
 import RelatorioDia from './pages/RelatorioDia'
-// import Comprovantes from './pages/Comprovantes' // próximo passo
+import Comprovantes from './pages/Comprovantes'
 import Pix from './pages/Pix'
 import Admin from './pages/Admin'
 import Consulta from './pages/Consulta'
@@ -113,7 +113,7 @@ export default function App() {
 
         <Route path="/comprovantes" element={
           <RotaProtegida sessao={sessao}>
-            <LayoutComNav><EmConstrucao titulo="Comprovantes PIX" /></LayoutComNav>
+            <LayoutComNav><Comprovantes /></LayoutComNav>
           </RotaProtegida>
         } />
 
