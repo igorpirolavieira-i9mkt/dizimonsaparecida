@@ -1,55 +1,36 @@
 // src/pages/Login.jsx
-// Login por telefone + senha
+// Login direto por e-mail + senha no Supabase Auth
+// Sem tabela "usuarios" intermediária — menos pontos de falha
 
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 
-function apenasDigitos(str) {
-  return str.replace(/\D/g, '')
-}
-
-function formatarTelefone(valor) {
-  const d = apenasDigitos(valor).slice(0, 11)
-  if (d.length <= 2)  return `(${d}`
-  if (d.length <= 7)  return `(${d.slice(0,2)}) ${d.slice(2)}`
-  return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`
+// Mensagens de erro traduzidas para português
+function traduzirErro(mensagem) {
+  if (!mensagem) return 'Erro inesperado. Tente novamente.'
+  if (mensagem.includes('Invalid login credentials')) return 'E-mail ou senha incorretos.'
+  if (mensagem.includes('Email not confirmed'))       return 'Confirme seu e-mail antes de entrar.'
+  if (mensagem.includes('Too many requests'))         return 'Muitas tentativas. Aguarde um momento.'
+  if (mensagem.includes('User not found'))            return 'E-mail não cadastrado.'
+  return 'Erro ao entrar. Verifique os dados e tente novamente.'
 }
 
 export default function Login() {
-  const [telefone, setTelefone] = useState('')
-  const [senha, setSenha] = useState('')
+  const [email, setEmail]       = useState('')
+  const [senha, setSenha]       = useState('')
   const [carregando, setCarregando] = useState(false)
-  const [erro, setErro] = useState('')
-
-  function handleTelefone(e) {
-    setTelefone(formatarTelefone(e.target.value))
-    setErro('')
-  }
+  const [erro, setErro]         = useState('')
 
   async function handleLogin(e) {
     e.preventDefault()
     setCarregando(true)
     setErro('')
     try {
-      const digitos = apenasDigitos(telefone)
-      const { data, error: errBusca } = await supabase
-        .from('usuarios')
-        .select('email_auth')
-        .eq('telefone', digitos)
-        .single()
-
-      if (errBusca || !data) {
-        setErro('Telefone não encontrado. Verifique o número.')
-        setCarregando(false)
-        return
-      }
-
-      const { error: errAuth } = await supabase.auth.signInWithPassword({
-        email: data.email_auth,
+      const { error } = await supabase.auth.signInWithPassword({
+        email: email.trim().toLowerCase(),
         password: senha,
       })
-
-      if (errAuth) setErro('Senha incorreta. Tente novamente.')
+      if (error) setErro(traduzirErro(error.message))
     } catch {
       setErro('Erro inesperado. Tente novamente.')
     } finally {
@@ -58,9 +39,10 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4"
-      style={{ background: 'linear-gradient(160deg, #0F2347 0%, #1A3A6B 60%, #254D8F 100%)' }}>
-
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{ background: 'linear-gradient(160deg, #0F2347 0%, #1A3A6B 60%, #254D8F 100%)' }}
+    >
       <div className="w-full max-w-sm">
 
         {/* Logo */}
@@ -73,26 +55,26 @@ export default function Login() {
 
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-          {/* Faixa dourada */}
           <div className="h-[3px] bg-dourado" />
 
           <div className="px-7 py-7">
             <form onSubmit={handleLogin} className="space-y-4">
 
-              {/* Telefone */}
+              {/* E-mail */}
               <div>
                 <label className="block text-xs font-bold text-manto uppercase tracking-wider mb-1.5">
-                  📱 Telefone
+                  ✉️ E-mail
                 </label>
                 <input
-                  type="tel"
-                  inputMode="numeric"
-                  value={telefone}
-                  onChange={handleTelefone}
-                  placeholder="(27) 99999-9999"
+                  type="email"
+                  inputMode="email"
+                  value={email}
+                  onChange={e => { setEmail(e.target.value); setErro('') }}
+                  placeholder="seu@email.com"
                   className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 text-base focus:outline-none focus:border-dourado transition-colors"
                   required
-                  autoComplete="tel"
+                  autoComplete="email"
+                  autoCapitalize="none"
                 />
               </div>
 
@@ -119,7 +101,7 @@ export default function Login() {
                 </p>
               )}
 
-              {/* Botão */}
+              {/* Botão entrar */}
               <button
                 type="submit"
                 disabled={carregando}
@@ -132,7 +114,11 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="text-blue-400 text-xs text-center mt-6">
+        {/* Nota de sessão — coletor não precisa logar todo domingo */}
+        <p className="text-blue-300 text-xs text-center mt-5 px-4">
+          A sessão fica salva no celular — você só precisa entrar uma vez.
+        </p>
+        <p className="text-blue-400/60 text-xs text-center mt-1">
           Acesso restrito à equipe da comunidade
         </p>
       </div>

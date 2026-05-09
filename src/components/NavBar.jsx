@@ -1,14 +1,14 @@
 // src/components/NavBar.jsx
-// Navegação inferior estilo mobile — aparece em todas as telas autenticadas
+// UX Otimizado: área de toque mínima 52px, label apenas na aba ativa, ícone maior na ativa
 
 import { useNavigate, useLocation } from 'react-router-dom'
 
 const ITENS = [
-  { rota: '/',              icone: '🏠', label: 'Início' },
-  { rota: '/resumo',        icone: '📊', label: 'Resumo' },
+  { rota: '/',              icone: '🏠', label: 'Início'  },
+  { rota: '/resumo',        icone: '📊', label: 'Resumo'  },
   { rota: '/relatorio-dia', icone: '📋', label: 'Canhoto' },
-  { rota: '/comprovantes',  icone: '📁', label: 'Compr.' },
-  { rota: '/admin',         icone: '⚙️', label: 'Admin' },
+  { rota: '/comprovantes',  icone: '📁', label: 'Compr.'  },
+  { rota: '/admin',         icone: '⚙️', label: 'Admin'   },
 ]
 
 export default function NavBar() {
@@ -24,14 +24,16 @@ export default function NavBar() {
             <button
               key={item.rota}
               onClick={() => navigate(item.rota)}
-              className={`flex-1 flex flex-col items-center justify-center py-2.5 text-xs font-semibold transition-colors
-                ${ativo
-                  ? 'text-dourado'
-                  : 'text-blue-300 hover:text-dourado-light'
-                }`}
+              // min-h-[52px] — área de toque mínima para coleta no celular
+              className={`flex-1 flex flex-col items-center justify-center min-h-[52px] px-1 py-2 font-semibold transition-colors
+                ${ativo ? 'text-dourado' : 'text-blue-300 hover:text-dourado-light'}`}
             >
-              <span className="text-xl mb-0.5">{item.icone}</span>
-              <span>{item.label}</span>
+              {/* Ícone maior na aba ativa */}
+              <span className={`transition-all leading-none ${ativo ? 'text-2xl mb-1' : 'text-xl'}`}>
+                {item.icone}
+              </span>
+              {/* Label visível apenas na aba ativa — menos poluição visual */}
+              {ativo && <span className="text-[11px] leading-none">{item.label}</span>}
             </button>
           )
         })}

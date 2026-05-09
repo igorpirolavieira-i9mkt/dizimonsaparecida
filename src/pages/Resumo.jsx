@@ -237,6 +237,28 @@ export default function Resumo() {
           ) : detalhesMes ? (
             <div className="space-y-3">
 
+              {/* Barra de progresso — quantos pagaram */}
+              {(() => {
+                const total = detalhesMes.pagaram.length + detalhesMes.naoPagaram.length
+                const pct = total > 0 ? Math.round((detalhesMes.pagaram.length / total) * 100) : 0
+                return (
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 py-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-bold text-manto">
+                        {detalhesMes.pagaram.length}/{total} pagaram
+                      </span>
+                      <span className="text-xs font-bold text-dourado">{pct}%</span>
+                    </div>
+                    <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-pago rounded-full transition-all duration-500"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })()}
+
               {/* Quem pagou */}
               <div className="bg-white rounded-2xl shadow-sm border border-pago-border overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-2.5 bg-pago-light border-b border-pago-border">
@@ -254,7 +276,7 @@ export default function Resumo() {
                     <button
                       key={p.id}
                       onClick={() => navigate(`/dizimista/${p.id}`)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 border-b border-gray-50 last:border-0 hover:bg-gray-50 text-left"
+                      className="w-full flex items-center justify-between px-4 border-b border-gray-50 last:border-0 hover:bg-gray-50 text-left min-h-[48px]"
                     >
                       <div className="flex items-center gap-2">
                         <span className="text-sm">
@@ -280,10 +302,13 @@ export default function Resumo() {
                     <button
                       key={d.id}
                       onClick={() => navigate(`/dizimista/${d.id}`)}
-                      className="w-full flex items-center justify-between px-4 py-2.5 border-b border-gray-50 last:border-0 hover:bg-gray-50 text-left"
+                      className="w-full flex items-center justify-between px-4 border-b border-gray-50 last:border-0 hover:bg-gray-50 text-left min-h-[48px]"
                     >
                       <span className="text-sm text-gray-600">{d.nome}</span>
-                      <span className="text-xs text-gray-400">→</span>
+                      {/* "Lançar →" deixa claro que o toque abre o perfil para lançar */}
+                      <span className="text-xs text-manto font-semibold border border-manto/30 rounded-lg px-2 py-0.5 shrink-0">
+                        Lançar →
+                      </span>
                     </button>
                   ))}
                 </div>
