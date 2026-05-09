@@ -24,6 +24,9 @@ export default function Dizimista() {
   // Modal de múltiplos meses
   const [modalMultiplos, setModalMultiplos] = useState(false)
 
+  // Link compartilhável para a Consulta pública
+  const [copiado, setCopiado] = useState(false)
+
   // Abre o modal automaticamente se vier com ?acao=multiplos
   useEffect(() => {
     if (searchParams.get('acao') === 'multiplos') {
@@ -91,6 +94,27 @@ export default function Dizimista() {
 
   function formatarValor(valor) {
     return Number(valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  }
+
+  // Copia o link de consulta pública com o id já preenchido
+  function compartilharLink() {
+    const url = `${window.location.origin}/consulta?id=${id}`
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopiado(true)
+        setTimeout(() => setCopiado(false), 2500)
+      })
+    } else {
+      // Fallback para dispositivos sem clipboard API
+      const el = document.createElement('textarea')
+      el.value = url
+      document.body.appendChild(el)
+      el.select()
+      document.execCommand('copy')
+      document.body.removeChild(el)
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2500)
+    }
   }
 
   function totalAno(ano, mapa) {
@@ -176,12 +200,25 @@ export default function Dizimista() {
                 <p className="text-sm text-gray-400">Sem dados de contato cadastrados.</p>
               )}
             </div>
-            <button
-              onClick={() => navigate(`/admin`)}
-              className="text-manto text-xs border border-manto/30 rounded-lg px-2 py-1 hover:bg-manto/5 shrink-0 ml-2"
-            >
-              ✏️ Editar
-            </button>
+            <div className="flex flex-col gap-1.5 shrink-0 ml-2">
+              <button
+                onClick={() => navigate(`/admin`)}
+                className="text-manto text-xs border border-manto/30 rounded-lg px-2 py-1 hover:bg-manto/5"
+              >
+                ✏️ Editar
+              </button>
+              <button
+                onClick={compartilharLink}
+                className={`text-xs rounded-lg px-2 py-1 transition-all border ${
+                  copiado
+                    ? 'bg-pago text-white border-pago'
+                    : 'text-dourado-dark border-dourado/40 hover:bg-dourado/5'
+                }`}
+                title="Copiar link de consulta pública"
+              >
+                {copiado ? '✓ Copiado!' : '🔗 Consulta'}
+              </button>
+            </div>
           </div>
         </div>
 
